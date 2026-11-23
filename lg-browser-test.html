@@ -1,0 +1,11 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WPS LG Browser-Test</title><style>body{margin:0;background:#f2f7f8;color:#143146;font:32px Arial,sans-serif;padding:5vw}h1{font-size:1.5em}.ok{color:#087b54}.bad{color:#b33442}p{margin:16px 0}small{font-size:20px}</style></head><body><h1>WPS – LG Browser-Test</h1><div id="results">JavaScript wird geprüft …</div><script>
+(function(){
+ var box=document.getElementById('results');box.innerHTML='';
+ function add(label,ok,info){var p=document.createElement('p');p.className=ok?'ok':'bad';p.appendChild(document.createTextNode((ok?'✓ ':'✗ ')+label+(info?' – '+info:'')));box.appendChild(p)}
+ add('Einfaches JavaScript',true);
+ var tests=[['Optional Chaining (?.)','var x={a:1};return x?.a===1'],['Nullish Coalescing (??)','return (null??7)===7'],['Async/Await','return (async function(){return 1})'],['Object Spread','var a={x:1};return {...a}.x===1'],['Template Literals','return `ok`==="ok"']];
+ for(var i=0;i<tests.length;i++){try{var r=new Function(tests[i][1])();add(tests[i][0],!!r)}catch(e){add(tests[i][0],false,e.name)}}
+ add('Fetch API',typeof fetch==='function');
+ if(typeof fetch==='function'){fetch('https://ylfzriylcecxvpuyignq.supabase.co/functions/v1/welcome-display').then(function(r){add('Supabase erreichbar',r.ok,'HTTP '+r.status)}).catch(function(e){add('Supabase erreichbar',false,String(e).slice(0,80))})}
+})();
+</script><small>Dieser Test ändert keine Daten und benötigt keine Anmeldung.</small></body></html>
