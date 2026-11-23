@@ -1,0 +1,1258 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WPS Welcome Manager 2.0.7</title><style>
+@font-face{font-family:Gilroy;src:url("fonts/Gilroy-Light.otf") format("opentype");font-weight:300;font-display:swap}
+@font-face{font-family:Gilroy;src:url("fonts/Gilroy-Regular.otf") format("opentype");font-weight:400;font-display:swap}
+@font-face{font-family:Gilroy;src:url("fonts/Gilroy-Medium.otf") format("opentype");font-weight:500;font-display:swap}
+@font-face{font-family:Gilroy;src:url("fonts/Gilroy-SemiBold.otf") format("opentype");font-weight:600;font-display:swap}
+
+:root{font-family:"Gilroy","Avenir Next","Century Gothic",Arial,sans-serif;color:#143146;background:#f2f6f8}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:11px 15px;background:#086d80;color:white;font-weight:600}button.secondary{background:#e4edf1;color:#16394b}button.danger{background:#a73547}button:disabled{opacity:.45}input,select,textarea{border:1px solid #c9d7df;border-radius:8px;padding:10px;width:100%;background:white;color:#18384a}label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}h1,h2,h3,p{margin-top:0}h1{font-size:25px}h2{font-size:19px}h3{font-size:15px}.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}.side{background:#09283e;color:white;padding:26px 17px;display:flex;flex-direction:column;gap:10px}.side img{width:170px;max-height:70px;object-fit:contain;margin:10px 5px 28px}.nav{display:block;text-align:left;background:transparent;color:#d8e9ee;width:100%;font-weight:500}.nav.active{background:#1c5368;color:white}.version{margin-top:auto;color:#8cabb9;font-size:12px}.main{padding:30px;max-width:1500px;width:100%;margin:auto}.head{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:25px}.sub{color:#648091;font-size:14px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:white;border:1px solid #dce6eb;border-radius:15px;padding:21px;box-shadow:0 3px 14px #0a273508}.stat{font-size:32px;font-weight:600;color:#087e8e}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.actions{display:flex;gap:8px;flex-wrap:wrap}.item{padding:15px 0;border-bottom:1px solid #e1eaee;display:flex;justify-content:space-between;align-items:center;gap:15px}.item:last-child{border:0}.muted{color:#718b98;font-size:13px}.tag{background:#e5f6f5;color:#087c80;border-radius:50px;padding:5px 9px;font-size:12px;display:inline-block}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field.full{grid-column:1/-1}.field{min-width:0}.section{display:none}.section.active{display:block}.preview{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:12px;background:#09283e}.preview iframe{width:100%;height:100%;border:0}.small{font-size:12px}.help{background:#e7f5f6;border-left:4px solid #1baab4;padding:14px;border-radius:7px;color:#285063;margin:16px 0}.modal-back{position:fixed;inset:0;background:#09283e99;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal-back.open{display:flex}.modal{background:white;border-radius:15px;padding:25px;max-width:650px;width:100%;max-height:90vh;overflow:auto}.modal h2{margin-bottom:20px}.toast{position:fixed;right:22px;bottom:22px;background:#0e5263;color:white;padding:13px 18px;border-radius:9px;display:none;z-index:30}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:15px 0}.toggle{display:flex;align-items:center;gap:8px}.toggle input{width:auto}.link{color:#087d90;text-decoration:underline;cursor:pointer}.hidden{display:none!important}
+/* Screen mode */body.display-mode{background:#09283e;color:white;overflow:hidden}.screen{position:fixed;inset:0;background:#09283e;color:white;overflow:hidden}.screen:before{content:"";position:absolute;width:80vw;height:80vw;border-radius:50%;background:radial-gradient(circle,#0b819388,transparent 65%);right:-32vw;top:-38vw;pointer-events:none;will-change:transform,opacity;animation:ambientA 28s ease-in-out infinite alternate}.screen:after{content:"";position:absolute;width:60vw;height:60vw;border-radius:50%;background:radial-gradient(circle,#105a7288,transparent 65%);left:-30vw;bottom:-38vw;pointer-events:none;will-change:transform,opacity;animation:ambientB 36s ease-in-out infinite alternate}.screen-inner{position:absolute;inset:0;display:flex;flex-direction:column;padding:5.5vh 6.5vw;z-index:1}.screen-top{display:flex;justify-content:space-between;align-items:center;gap:30px}.screen-logo{width:min(21vw,350px);height:9vh;object-fit:contain;object-position:left center}.screen-clock{font-size:clamp(18px,2vw,36px);font-weight:300;letter-spacing:1px;color:#b5d7df}.screen-body{flex:1;display:flex;align-items:center;min-height:0}.screen-content{width:100%;max-width:82vw}.eyebrow{color:#57d5d2;font-weight:500;letter-spacing:.19em;text-transform:uppercase;font-size:clamp(14px,1.5vw,28px);margin-bottom:3vh}.screen-title{font-size:clamp(38px,5.5vw,112px);font-weight:500;line-height:1.13;letter-spacing:-.025em;max-width:85%;overflow-wrap:anywhere}.screen-subtitle{font-weight:300;font-size:clamp(18px,2.4vw,48px);line-height:1.3;margin-top:3vh;color:#d7ecf0;max-width:78%}.screen-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #ffffff35;padding-top:2.5vh;color:#b7d7df;font-size:clamp(14px,1.25vw,26px)}.screen-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.media-shade{position:absolute;inset:0;background:linear-gradient(90deg,#051e32e8 0%,#09283e99 60%,#09283e66 100%)}.screen.dash .screen-body{display:grid;grid-template-columns:1.7fr 1fr;gap:5vw}.screen.dash .screen-title{font-size:clamp(32px,4.2vw,86px);max-width:100%}.dash-panel{background:#ffffff15;border:1px solid #ffffff30;border-radius:22px;padding:3vw}.dash-panel h3{color:#65d8d5;font-size:clamp(16px,1.5vw,30px);margin-bottom:2vh}.dash-event{font-size:clamp(16px,1.6vw,34px);padding:1.5vh 0;border-bottom:1px solid #ffffff30}.dash-event small{display:block;color:#b5d7df;font-size:.7em;margin-top:8px}.screen-qr{position:absolute;right:7vw;bottom:14vh;background:white;padding:10px;border-radius:12px;width:10vw;max-width:175px;min-width:85px}.screen-qr img{width:100%;display:block}.progress{height:4px;background:#ffffff25;position:absolute;bottom:0;left:0;right:0;z-index:4}.progress div{height:100%;background:#48c8c8;transition:width .3s linear}.screen-fade{animation:fade .65s ease}@keyframes fade{from{opacity:.2;transform:scale(1.008)}to{opacity:1;transform:scale(1)}}@media(max-width:850px){.shell{grid-template-columns:1fr}.side{padding:15px;display:block}.side img{width:130px;margin:0 15px 5px 0;vertical-align:middle}.nav{display:inline-block;width:auto;padding:8px}.version{display:none}.main{padding:18px}.cards{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.head{align-items:flex-start;flex-direction:column}}
+
+/* WPS 2.0.2 – ruhiger, dynamischer Ambient-Hintergrund */
+.screen{background:linear-gradient(125deg,#071c30 0%,#09283e 52%,#0b3447 100%)}
+.screen:before{background:radial-gradient(circle,#1bb3b466 0%,#08758d30 43%,transparent 70%);filter:blur(24px)}
+.screen:after{background:radial-gradient(circle,#1595a566 0%,#1e627b33 45%,transparent 72%);filter:blur(28px)}
+@keyframes ambientA{0%{transform:translate3d(-7%,2%,0) scale(.93);opacity:.65}50%{transform:translate3d(10%,12%,0) scale(1.12);opacity:.95}100%{transform:translate3d(-4%,24%,0) scale(1.02);opacity:.73}}
+@keyframes ambientB{0%{transform:translate3d(8%,-12%,0) scale(1);opacity:.58}50%{transform:translate3d(23%,-4%,0) scale(1.2);opacity:.9}100%{transform:translate3d(-6%,-20%,0) scale(.94);opacity:.7}}
+@media(prefers-reduced-motion:reduce){.screen:before,.screen:after{animation:none}.screen-fade{animation:none}}
+.screen-content{position:relative;text-shadow:0 2px 22px #061a2c55}
+.screen-title{font-weight:500}
+.screen.dash .screen-title{font-weight:500}
+.screen-bottom{font-weight:300;letter-spacing:.02em}
+.dash-panel{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+
+
+/* 2.0.2 – deutlich sichtbare, aber ruhige Lichtbewegung */
+.screen{background:linear-gradient(125deg,#06192b 0%,#09283e 48%,#0b3448 100%)}
+.screen:before{width:95vw;height:95vw;right:-18vw;top:-24vw;background:radial-gradient(circle at center,rgba(34,207,204,.52) 0%,rgba(16,144,166,.30) 32%,rgba(12,93,121,.12) 53%,transparent 72%);filter:blur(12px);animation:ambientA2 13s ease-in-out infinite alternate;opacity:1}
+.screen:after{width:85vw;height:85vw;left:-22vw;bottom:-28vw;background:radial-gradient(circle at center,rgba(19,155,184,.42) 0%,rgba(20,110,157,.23) 39%,transparent 70%);filter:blur(12px);animation:ambientB2 17s ease-in-out infinite alternate;opacity:1}
+@keyframes ambientA2{0%{transform:translate3d(-17%,3%,0) scale(.85)}50%{transform:translate3d(2%,17%,0) scale(1.08)}100%{transform:translate3d(-25%,29%,0) scale(.95)}}
+@keyframes ambientB2{0%{transform:translate3d(5%,-12%,0) scale(.9)}50%{transform:translate3d(32%,-22%,0) scale(1.08)}100%{transform:translate3d(48%,-4%,0) scale(.94)}}
+@media(prefers-reduced-motion:reduce){.screen:before,.screen:after{animation:none}}
+
+/* 2.0.2: transparente Bahnhofsuhr und flexible Fotolayouts */
+.rail-clock{width:clamp(92px,10.2vw,205px);height:clamp(92px,10.2vw,205px);flex:none;filter:drop-shadow(0 1px 4px #041b2b88)}
+.rail-clock svg{width:100%;height:100%;display:block}.rail-clock .hour,.rail-clock .minute,.rail-clock .second{transform-origin:80px 80px}
+.screen.image-side .media-shade{background:linear-gradient(90deg,#061e31 0%,#08273ae8 29%,#08273a80 49%,transparent 77%)}
+.screen.image-panel .media-shade,.screen.image-bottom .media-shade,.screen.image-split .media-shade{display:none}
+.screen.image-panel .screen-content{background:rgba(5,29,47,.84);padding:2.5vw 3vw;border-radius:16px;max-width:63vw;backdrop-filter:blur(3px)}
+.screen.image-bottom .screen-body{align-items:flex-end}.screen.image-bottom .screen-content{padding:5vh 3vw 2vh;max-width:100%;width:100%;background:linear-gradient(0deg,rgba(4,24,40,.95),rgba(4,24,40,.72) 64%,transparent)}
+.screen.image-bottom .screen-inner{padding-left:0;padding-right:0}.screen.image-bottom .screen-top,.screen.image-bottom .screen-bottom{margin-left:6.5vw;margin-right:6.5vw}.screen.image-bottom .screen-content .screen-title{max-width:95%}
+.screen.image-split .screen-media{left:43%;width:57%}.screen.image-split .screen-inner{background:linear-gradient(90deg,#09283e 0%,#09283e 43%,transparent 43%)}.screen.image-split .screen-content{max-width:40%}.screen.image-split .screen-title{max-width:100%;font-size:clamp(32px,4.2vw,85px)}.screen.image-split .screen-subtitle{max-width:100%}
+.screen.dash.image-split .screen-inner{background:none}.screen.dash.image-split .media-shade{display:block;background:linear-gradient(90deg,#09283ef5,#09283e88)}
+.image-edit-preview{aspect-ratio:16/9;border-radius:10px;overflow:hidden;position:relative;background:#09283e;margin:8px 0 4px;color:white}.image-edit-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.image-edit-preview .shade{position:absolute;inset:0}.image-edit-preview .copy{position:absolute;left:6%;bottom:14%;right:6%;font-size:clamp(12px,2.5vw,22px);font-weight:500;text-shadow:0 1px 5px #0006}.image-edit-preview .copy small{display:block;font-size:.55em;font-weight:400;margin-top:6px}.image-edit-preview.side .shade{background:linear-gradient(90deg,#09283ef5,#09283eaa 45%,transparent 90%)}.image-edit-preview.panel .copy{background:#09283ee8;padding:15px;border-radius:8px;right:25%}.image-edit-preview.bottom .shade{background:linear-gradient(0deg,#09283ef0,transparent 55%)}.image-edit-preview.split img{left:43%;width:57%}.image-edit-preview.split .shade{background:linear-gradient(90deg,#09283e 43%,transparent 43%)}.image-edit-preview.split .copy{right:60%}
+
+/* v2.0.7: new light/dark reception tiles */
+.screen.tiles{background:#edf4f5;color:#19384a}.screen.tiles:before,.screen.tiles:after{opacity:.20}
+.screen.tiles.dark{background:#09283e;color:#f4fbfc}.screen.tiles.dark:before,.screen.tiles.dark:after{opacity:.65}
+.screen.tiles .screen-inner{padding:3.6vh 4.2vw;display:block}
+.tile-header{height:17%;display:flex;align-items:center;justify-content:space-between;gap:3vw}
+.tile-header .screen-logo{width:min(17vw,300px);height:8vh}
+.tile-greeting{flex:1}.tile-greeting h1{font-size:clamp(28px,3.4vw,74px);font-weight:300;line-height:1.08;margin:0}.tile-greeting p{font-size:clamp(13px,1.1vw,25px);margin:.6vh 0 0;color:#587481}
+.screen.tiles.dark .tile-greeting p{color:#b7d6dc}
+.screen.tiles .rail-clock{position:static;flex:0 0 auto;width:min(9.4vw,180px);height:min(9.4vw,180px);color:#18384a}
+.screen.tiles.dark .rail-clock{color:#fff}
+.tile-grid{height:79%;display:grid;grid-template-columns:1.55fr .92fr;grid-template-rows:1fr 1fr;gap:1.5vw}
+.tile{background:#fff;border:1px solid #dbe7e9;border-radius:1.25vw;overflow:hidden;position:relative;box-shadow:0 8px 32px #13384b0b}
+.screen.tiles.dark .tile{background:#153b4f;border-color:#ffffff20;box-shadow:none}
+.tile-feature{grid-row:1/3;display:flex;flex-direction:column}
+.tile-photo{height:63%;background:linear-gradient(135deg,#d9edf0,#f2f6f7);position:relative;overflow:hidden}
+.tile-photo img,.tile-photo video{width:100%;height:100%;object-fit:cover}
+.tile-photo .tile-photo-fallback{position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,#45c7c5,transparent 40%),linear-gradient(135deg,#0b4562,#0e8a9c)}
+.tile-feature-copy{flex:1;padding:2vw 2.3vw;display:flex;flex-direction:column;justify-content:center;gap:.7vw}
+.tile-eyebrow{font-size:clamp(11px,.95vw,22px);letter-spacing:.12em;color:#008f99;text-transform:uppercase;font-weight:600}
+.screen.tiles.dark .tile-eyebrow{color:#67d9d4}
+.tile-feature h2{font-size:clamp(24px,2.55vw,58px);font-weight:400;line-height:1.13;margin:0;color:inherit}
+.tile-feature p{font-size:clamp(13px,1.25vw,28px);line-height:1.3;margin:0;color:#587481}
+.screen.tiles.dark .tile-feature p{color:#c0d7dd}
+.tile-qr{position:absolute;right:1.5vw;bottom:1.3vw;width:min(7.2vw,130px);background:white;padding:6px;border-radius:8px}.tile-qr img{display:block;width:100%}
+.tile-weather{padding:2vw;display:flex;flex-direction:column;justify-content:center;gap:1vw}
+.tile-weather-row{display:flex;align-items:center;gap:1.5vw}.tile-weather-icon{font-size:clamp(35px,4.5vw,100px)}.tile-temp{font-size:clamp(32px,4vw,90px);font-weight:300;line-height:1}
+.tile-weather-desc{font-size:clamp(16px,1.5vw,32px)}.tile-meta{font-size:clamp(11px,.8vw,18px);color:#68818c}
+.screen.tiles.dark .tile-meta{color:#a9c5cf}
+.tile-events{padding:1.5vw 2vw;display:flex;flex-direction:column;gap:.8vw}
+.tile-events h2{font-size:clamp(16px,1.5vw,33px);font-weight:500;margin:0}
+.tile-event{display:flex;align-items:center;gap:1vw;padding:.5vw 0;border-top:1px solid #dbe7e9;min-height:0}
+.screen.tiles.dark .tile-event{border-color:#ffffff25}
+.tile-date{background:#e4f5f5;color:#0d6e7a;border-radius:.6vw;padding:.5vw .7vw;text-align:center;min-width:3.7vw;font-weight:600;font-size:clamp(12px,1.2vw,25px)}
+.tile-event-title{font-size:clamp(12px,1.1vw,25px);font-weight:500;line-height:1.2}.tile-event-sub{font-size:clamp(10px,.85vw,19px);color:#6a8390}
+.screen.tiles.dark .tile-event-sub{color:#b4ccd5}
+.tile-footer{position:absolute;bottom:1.3vh;left:4.2vw;right:4.2vw;display:flex;justify-content:space-between;color:#68818c;font-size:clamp(10px,.8vw,18px)}
+.screen.tiles.dark .tile-footer{color:#b7d4dc}
+.screen.light:not(.tiles){background:#f0f6f7;color:#17374a}.screen.light:not(.tiles) .screen-subtitle,.screen.light:not(.tiles) .screen-bottom{color:#4b6879}.screen.light:not(.tiles) .eyebrow{color:#007e8a}.screen.light:not(.tiles) .screen-bottom{border-color:#14314635}.screen.light:not(.tiles) .screen-title{text-shadow:none}
+.screen.light:not(.tiles) .rail-clock{color:#17374a}
+.screen.light.image-side .media-shade{background:linear-gradient(90deg,#f0f6f7 0%,#f0f6f7e8 29%,#f0f6f770 51%,transparent 80%)}
+.screen.light.image-panel .screen-content{background:#f4f9f3e8;color:#18384a}
+.screen.light.image-bottom .screen-content{background:linear-gradient(0deg,#f0f6f7f5,#f0f6f7cf 65%,transparent)}
+.screen.light.image-split .screen-inner{background:linear-gradient(90deg,#f0f6f7 0%,#f0f6f7 43%,transparent 43%)}
+.screen.light .screen-qr{box-shadow:0 2px 14px #17374a20}
+.screen:not(.light) .rail-clock{color:#fff}
+@media(max-width:850px){.tile-grid{gap:1vw}.tile-feature-copy{padding:1.4vw}.tile-weather{padding:1.2vw}}
+
+/* v2.0.7 – one-line greeting and integrated weather clock */
+.screen.tiles .tile-header{gap:2.2vw}
+.screen.tiles .tile-greeting{min-width:0;display:flex;align-items:center}
+.screen.tiles .tile-greeting h1{font-size:clamp(22px,2.65vw,60px);font-weight:300;line-height:1.14;letter-spacing:-.025em;white-space:nowrap}
+.screen.tiles .tile-weather{padding:1.6vw 1.7vw}
+.screen.tiles .tile-weather-main{display:flex;align-items:center;justify-content:space-between;gap:1vw;width:100%;height:100%}
+.screen.tiles .tile-weather-copy{min-width:0;display:flex;flex-direction:column;gap:.65vw}
+.screen.tiles .tile-weather .rail-clock{width:clamp(90px,10.1vw,205px);height:clamp(90px,10.1vw,205px);flex:0 0 auto;filter:none}
+.screen.tiles .tile-weather-row{gap:.8vw}
+.screen.tiles .tile-weather-icon{font-size:clamp(27px,3vw,70px)}
+.screen.tiles .tile-temp{font-size:clamp(29px,3vw,72px)}
+.screen.tiles .tile-weather-desc{font-size:clamp(13px,1.15vw,26px)}
+@media(max-width:1050px){.screen.tiles .tile-greeting h1{font-size:2.5vw}.screen.tiles .tile-weather .rail-clock{width:9vw;height:9vw}}
+
+/* v2.0.7: high-contrast welcome pages and compact weather details */
+.screen.welcome-clean.light{background:#f7fafb!important;color:#12334b!important}
+.screen.welcome-clean.light:before,.screen.welcome-clean.light:after{display:none!important}
+.screen.welcome-clean.light .screen-inner{background:linear-gradient(110deg,#ffffff 0%,#ffffff 68%,#f1f7f8 100%);color:#12334b}
+.screen.welcome-clean.light .screen-body{position:relative}
+.screen.welcome-clean.light .screen-body:after{content:"";position:absolute;right:3%;bottom:5%;width:21vw;height:21vw;border:2.8vw solid #d9f3f3;transform:rotate(45deg);border-radius:3vw;opacity:.48;pointer-events:none}
+.screen.welcome-clean.light .screen-content{position:relative;z-index:1;max-width:80%}
+.screen.welcome-clean.light .eyebrow{color:#098e9a!important;font-weight:600;letter-spacing:.13em}
+.screen.welcome-clean.light .screen-title{color:#12334b!important;font-weight:500;letter-spacing:-.035em}
+.screen.welcome-clean.light .screen-subtitle{color:#385666!important;font-weight:400}
+.screen.welcome-clean.light .screen-bottom{color:#526c7b!important;border-top:1px solid #dce8ed}
+.screen.welcome-clean.light .rail-clock{color:#17374a!important;filter:none!important}
+.screen.welcome-clean.light .screen-content:before{content:"";display:block;width:5vw;height:.45vw;max-height:9px;background:#14a8b4;border-radius:8px;margin-bottom:2vw}
+.tile-weather-extra{display:flex;flex-wrap:wrap;gap:.45vw 1vw;margin-top:.4vw;color:#5d7582;font-size:clamp(11px,.85vw,20px)}
+.tile-weather-extra b{color:#18394c;font-weight:600}
+.screen.tiles.dark .tile-weather-extra,.screen.tiles.dark .tile-weather-extra b{color:#e7f5f5}
+
+/* 2.0.2: full-screen event layout based on approved WPS mockup */
+.screen.welcome-clean.light{background:#fff!important;color:#111827!important}
+.screen.welcome-clean.light .screen-inner{background:#fff!important;padding:7.5vh 5.2vw 5.8vh!important}
+.screen.welcome-clean.light .screen-body:after,.screen.welcome-clean.light .screen-content:before{display:none!important}
+.screen.welcome-clean.light .screen-top{align-items:flex-start}
+.screen.welcome-clean.light .screen-logo{width:min(21vw,350px);height:12vh;max-height:130px}
+.screen.welcome-clean.light .screen-body{align-items:center;flex:1;min-height:0}
+.screen.welcome-clean.light .screen-content{max-width:100%!important;width:100%;padding:0 0 1vh}
+.screen.welcome-clean.light .eyebrow{font-size:clamp(20px,2.35vw,48px);font-weight:400!important;letter-spacing:0!important;color:#2eb5c3!important;margin-bottom:3vh;text-transform:uppercase}
+.screen.welcome-clean.light .screen-title{font-size:clamp(30px,4.4vw,92px);line-height:1.12;font-weight:600!important;letter-spacing:-.028em;color:#101828!important;max-width:100%;overflow-wrap:normal;word-break:normal;hyphens:auto}
+.screen.welcome-clean.light .screen-subtitle{font-size:clamp(19px,2.4vw,46px);font-weight:400!important;line-height:1.3;color:#101828!important;margin-top:3.5vh;max-width:100%}
+.screen.welcome-clean.light .event-room{font-size:clamp(20px,2.25vw,44px);font-weight:600;color:#101828;margin-top:4vh}
+.screen.welcome-clean.light .screen-bottom{border-top:1px solid #40c1cb!important;color:#101828!important;padding-top:2.2vh;font-size:clamp(14px,1.2vw,25px)}
+.screen.welcome-clean.light .rail-clock{background:transparent!important;box-shadow:none!important}
+.screen.welcome-clean.light .progress{display:none!important}
+.screen.welcome-clean.light.screen-fade{animation:none!important}
+
+/* v2.0.7 – balanced editorial event typography */
+.screen.welcome-clean.light .screen-inner{padding:6.2vh 5.2vw 4.8vh!important}
+.screen.welcome-clean.light .screen-top{align-items:center}
+.screen.welcome-clean.light .screen-logo{height:10vh;max-height:115px}
+.screen.welcome-clean.light .screen-body{align-items:center}
+.screen.welcome-clean.light .screen-content{width:100%;max-width:78%!important;padding:0!important;filter:none!important;text-shadow:none!important}
+.screen.welcome-clean.light .eyebrow{font-size:clamp(18px,1.8vw,35px);font-weight:500!important;letter-spacing:.035em!important;margin-bottom:2.4vh;text-shadow:none!important}
+.screen.welcome-clean.light .screen-title{font-size:clamp(32px,3.4vw,66px);font-weight:500!important;line-height:1.16;letter-spacing:-.024em;max-width:100%;overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important;text-shadow:none!important}
+.screen.welcome-clean.light .screen-subtitle{font-size:clamp(19px,1.95vw,37px);font-weight:400!important;line-height:1.32;margin-top:3vh;color:#334c5b!important;text-shadow:none!important}
+.screen.welcome-clean.light .event-room{font-size:clamp(19px,1.8vw,34px);font-weight:500!important;margin-top:3.2vh;color:#12334b!important;text-shadow:none!important}
+.screen.welcome-clean.light .screen-bottom{padding-top:1.6vh;font-size:clamp(13px,1.05vw,21px)}
+.screen.welcome-clean.light .screen-content *{filter:none!important}
+/* v2.0.7: Respect editorial line breaks in event headlines. */
+.screen.welcome-clean #eventFitTitle{white-space:pre-line;hyphens:none;word-break:normal;overflow-wrap:normal;max-width:100%;}
+
+/* v2.0.7: QR gets its own column, never overlays the headline. */
+.tile-feature-copy{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1.7vw;justify-content:initial;min-height:0}
+.tile-feature-text{min-width:0;display:flex;flex-direction:column;gap:.7vw}
+.tile-feature h2{font-size:clamp(23px,2.35vw,52px);line-height:1.12;font-weight:400;overflow-wrap:normal;word-break:normal;hyphens:none;white-space:normal}
+.tile-qr{position:static;right:auto;bottom:auto;width:clamp(90px,7.2vw,140px);flex:none;padding:7px;border:1px solid #e4edf0;border-radius:9px;box-shadow:none;align-self:center}
+.tile-photo img{display:block}
+
+/* 2.0.2: clear QR caption, independent content modes */
+.tile-qr,.screen-qr{display:flex;flex-direction:column;align-items:center;gap:7px;box-sizing:border-box}
+.tile-qr-label{font-size:clamp(11px,.83vw,17px);font-weight:600;letter-spacing:.055em;text-transform:uppercase;color:#008d9a;white-space:nowrap;text-align:center}
+.screen-qr .tile-qr-label{font-size:clamp(12px,1vw,19px)}
+.tile-feature-text h2{white-space:normal;overflow-wrap:normal;word-break:normal;hyphens:none}
+
+/* v2.0.7 – single editorial split for fullscreen content; event welcomes untouched */
+.screen.editorial-full{background:#fff!important;color:#101828!important;animation:none!important}
+.screen.editorial-full .editorial-wrap{height:100%;width:100%;display:grid;grid-template-columns:45% 55%;overflow:hidden}
+.screen.editorial-full .editorial-left{background:#fff;display:flex;flex-direction:column;min-width:0;min-height:0;padding:4.2vh 3.2vw 3.4vh 4vw;box-sizing:border-box}
+.screen.editorial-full .editorial-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1.2vw;flex-shrink:0}
+.screen.editorial-full .editorial-logo{width:min(15vw,275px);max-height:10vh;object-fit:contain;object-position:left center}
+.screen.editorial-full .rail-clock{position:relative!important;inset:auto!important;transform:none!important;width:clamp(88px,8vw,155px)!important;height:clamp(88px,8vw,155px)!important;flex-shrink:0;background:transparent!important;box-shadow:none!important;filter:none!important;color:#17374a!important}
+.screen.editorial-full .editorial-main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:2vh;padding:1.8vh 0}
+.screen.editorial-full .editorial-eyebrow{color:#008e9c;font-size:clamp(16px,1.35vw,27px);font-weight:600;letter-spacing:.11em;text-transform:uppercase;overflow-wrap:anywhere}
+.screen.editorial-full .editorial-title{font-size:clamp(30px,3.05vw,63px);line-height:1.13;letter-spacing:-.025em;font-weight:500;color:#101828;overflow-wrap:normal;word-break:normal;hyphens:none;min-width:0;max-width:100%}
+.screen.editorial-full .editorial-subtitle{font-size:clamp(19px,1.5vw,32px);line-height:1.32;color:#536c7b;font-weight:400;overflow-wrap:break-word}
+.screen.editorial-full .editorial-bottom{display:flex;align-items:end;justify-content:space-between;gap:1vw;border-top:1px solid #dce9ec;padding-top:2.1vh;flex-shrink:0;min-height:10vh}
+.screen.editorial-full .editorial-footer{font-size:clamp(13px,.9vw,19px);color:#667b86;align-self:end;padding-bottom:.5vh}
+.screen.editorial-full .editorial-qr{display:flex;align-items:center;gap:.9vw;flex-shrink:0}
+.screen.editorial-full .editorial-qr span{font-size:clamp(12px,1vw,20px);font-weight:600;color:#008e9c;white-space:nowrap}
+.screen.editorial-full .editorial-qr img{width:clamp(85px,7.5vw,150px);height:clamp(85px,7.5vw,150px);background:white;padding:5px;border:1px solid #e1eaed;border-radius:8px;box-sizing:border-box}
+.screen.editorial-full .editorial-right{min-width:0;min-height:0;position:relative;background:linear-gradient(125deg,#0c465f,#1da6af)}
+.screen.editorial-full .editorial-right img,.screen.editorial-full .editorial-right video{display:block;width:100%;height:100%;object-fit:cover}
+.screen.editorial-full .editorial-right .editorial-no-image{height:100%;background:linear-gradient(135deg,#093d58,#1ba5ad)}
+.screen.editorial-full .progress{display:none!important}
+
+/* 2.0.2: pure white editorial information panel */
+.screen.editorial-full,.screen.editorial-full .editorial-wrap,.screen.editorial-full .editorial-left{background:#fff!important;background-image:none!important;box-shadow:none!important;filter:none!important}
+.screen.editorial-full:before,.screen.editorial-full:after,.screen.editorial-full .editorial-left:before,.screen.editorial-full .editorial-left:after{display:none!important;content:none!important}
+.screen.editorial-full .editorial-main{gap:1.45vh}
+.screen.editorial-full .editorial-meta{display:flex;flex-direction:column;gap:1vh;margin-top:1.4vh;color:#17374a;font-size:clamp(16px,1.25vw,26px);font-weight:500}
+.screen.editorial-full .editorial-meta-row{display:flex;align-items:center;gap:.8vw}
+.screen.editorial-full .editorial-meta-row svg{width:1.35em;height:1.35em;flex-shrink:0;color:#008e9c}
+#screenRoot{position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;z-index:1}
+#screenRoot>.screen{position:absolute;inset:0;width:100%;height:100%}
+#screenRoot>.screen.wps-enter{animation:wps-enter var(--wps-transition,1.2s) ease-in-out both!important}
+#screenRoot>.screen.wps-exit{animation:wps-exit var(--wps-transition,1.2s) ease-in-out both!important;pointer-events:none}
+@keyframes wps-enter{from{opacity:0}to{opacity:1}}
+@keyframes wps-exit{from{opacity:1}to{opacity:0}}
+@media(prefers-reduced-motion:reduce){#screenRoot>.screen.wps-enter,#screenRoot>.screen.wps-exit{animation:none!important}}
+
+/* v2.0.7 – GPU-friendly Ken-Burns-Zoom. Only the photo layer moves. */
+@keyframes wpsPhotoZoom {
+  from { transform: translate3d(0,0,0) scale3d(1,1,1); }
+  to   { transform: translate3d(0,0,0) scale3d(1.04,1.04,1); }
+}
+.screen.tiles .tile-photo img,
+.screen.editorial-full .editorial-right > img,
+.screen > .screen-media:is(img) {
+  display: block;
+  transform: translate3d(0,0,0) scale3d(1,1,1);
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  animation: wpsPhotoZoom 26s linear both;
+}
+.screen.editorial-full .editorial-right,
+.screen.tiles .tile-photo { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .screen.tiles .tile-photo img,
+  .screen.editorial-full .editorial-right > img,
+  .screen > .screen-media:is(img) { animation: none; will-change: auto; }
+}
+
+/* v2.0.7: subtle weather-icon motion, with reduced-motion support. */
+.wps-weather-animated{display:inline-block;transform-origin:center center;will-change:transform;animation:wps-weather-bob 5s ease-in-out infinite}
+.wps-weather-sun{animation:wps-weather-sun 10s ease-in-out infinite}
+.wps-weather-cloud{animation:wps-weather-drift 6s ease-in-out infinite}
+.wps-weather-fog{animation:wps-weather-fog 5s ease-in-out infinite}
+.wps-weather-snow{animation:wps-weather-bob 4s ease-in-out infinite}
+.wps-weather-storm{animation:wps-weather-storm 6s ease-in-out infinite}
+@keyframes wps-weather-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes wps-weather-sun{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(7deg) scale(1.06)}}
+@keyframes wps-weather-drift{0%,100%{transform:translateX(-3px)}50%{transform:translateX(4px)}}
+@keyframes wps-weather-fog{0%,100%{transform:translateX(-2px);opacity:1}50%{transform:translateX(3px);opacity:.8}}
+@keyframes wps-weather-storm{0%,85%,100%{transform:translateY(0)}90%{transform:translateY(-3px)}95%{transform:translateY(2px)}}
+@media(prefers-reduced-motion:reduce){.wps-weather-animated{animation:none!important}}
+
+/* v2.0.7: independent crossfade of dashboard feature cards. */
+.screen.tiles .tile-grid{position:relative}
+.screen.tiles .tile-feature.wps-tile-leaving{pointer-events:none;animation:wps-tile-fade-out var(--wps-transition,1.2s) ease-in-out both!important}
+.screen.tiles .tile-feature.wps-tile-arriving{position:absolute;z-index:2;box-sizing:border-box;animation:wps-tile-fade-in var(--wps-transition,1.2s) ease-in-out both!important}
+@keyframes wps-tile-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes wps-tile-fade-out{from{opacity:1}to{opacity:0}}
+@media(prefers-reduced-motion:reduce){.screen.tiles .tile-feature.wps-tile-leaving,.screen.tiles .tile-feature.wps-tile-arriving{animation:none!important}}
+/* v2.0.7: personal guest welcome gets a more prominent name; other welcome types unchanged. */
+.screen.welcome-clean.welcome-visit .screen-content{max-width:90%!important}
+.screen.welcome-clean.welcome-visit .screen-title{font-size:clamp(32px,4.6vw,88px);line-height:1.13}
+
+/* v2.0.7: klarer Fokus in der Eingabemaske */
+.wps-advanced{border:1px solid #dce5e8;border-radius:10px;padding:13px 16px;background:#fafcfd;width:100%}
+.wps-advanced summary{cursor:pointer;font-weight:650;color:#173a4c;list-style:revert}
+.wps-advanced[open] summary{margin-bottom:6px}
+#modalContent form .toolbar{margin-top:22px}
+/* v2.0.7 – Tageszeitbegrüßung rechtsbündig im Kopfbereich */
+.screen.tiles .tile-greeting{justify-content:flex-end;text-align:right}
+.screen.tiles .tile-greeting h1{text-align:right;max-width:100%}
+
+/* 2.0.2 Agenda editorial view */
+.agenda-full .editorial-wrap{grid-template-columns:45% 55%}
+.agenda-panel{box-sizing:border-box;min-width:0;height:100%;padding:7vh 4.3vw 6vh 3.6vw;background:#fff;border-left:0;display:flex;flex-direction:column;justify-content:center;color:#142c42}
+.agenda-heading{font-size:clamp(15px,1.2vw,26px);font-weight:700;letter-spacing:.12em;color:#098e97;margin-bottom:2.2vh}
+.agenda-list{display:flex;flex-direction:column;gap:clamp(5px,.7vh,14px)}
+.agenda-row{display:grid;grid-template-columns:clamp(65px,6vw,135px) minmax(0,1fr) auto;align-items:center;gap:1.1vw;padding:clamp(9px,1.25vh,22px) clamp(10px,1vw,24px);border-radius:10px;font-size:clamp(15px,1.45vw,30px);line-height:1.25}
+.agenda-row.past{color:#8795a2}.agenda-row.future{color:#142c42}.agenda-row.current{background:#e6f5f4;color:#142c42;font-weight:700}
+.agenda-time{font-weight:700;font-variant-numeric:tabular-nums}.agenda-name{overflow-wrap:anywhere}.agenda-now{font-size:clamp(10px,.85vw,18px);color:#008b93;letter-spacing:.08em}
+.agenda-pages{margin-top:1.5vh;color:#73818e;font-size:clamp(11px,.85vw,18px)}
+.agenda-edit-row{display:grid;grid-template-columns:115px minmax(0,1fr) auto;gap:8px;margin:8px 0}.agenda-edit-row input{min-width:0}.agenda-editor{border-top:1px solid #dfe7eb;padding-top:15px}
+
+/* v2.0.7 – WPS Live-Agenda im Stil einer Haltestellenanzeige */
+.agenda-panel{justify-content:center;padding:6vh 3.8vw 6vh 3.5vw}
+.agenda-live-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:3vh}
+.agenda-heading{margin:0}
+.agenda-live-pill{display:flex;align-items:center;gap:10px;color:#087f87;font-size:clamp(13px,.95vw,20px);font-weight:700;letter-spacing:.1em}
+.agenda-live-dot{position:relative;display:inline-block;flex:0 0 auto;width:10px;height:10px;border-radius:50%;background:#079b9e}
+.agenda-live-dot:after{content:"";position:absolute;inset:-6px;border:2px solid #079b9e;border-radius:50%;animation:wps-live-pulse 2.6s ease-out infinite}
+@keyframes wps-live-pulse{0%{transform:scale(.45);opacity:.65}80%,100%{transform:scale(1.45);opacity:0}}
+.agenda-timeline{position:relative;display:flex;flex-direction:column;gap:clamp(5px,.65vh,12px)}
+.agenda-timeline:before{content:"";position:absolute;left:13px;top:19px;bottom:19px;width:3px;background:#d5e4e8;border-radius:5px}
+.agenda-stop{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr);gap:clamp(14px,1.25vw,26px);align-items:center;min-height:clamp(58px,8.4vh,98px)}
+.agenda-stop-dot{z-index:1;width:13px;height:13px;margin-left:7px;border:2px solid #0b9ca4;border-radius:50%;background:white;box-sizing:border-box}
+.agenda-stop.past .agenda-stop-dot{border-color:#aebcc6;background:#aebcc6}
+.agenda-stop.current .agenda-stop-dot{width:19px;height:19px;margin-left:4px;border:5px solid #079b9e;box-shadow:0 0 0 7px #e3f5f4}
+.agenda-stop-content{min-width:0;padding:clamp(7px,.9vh,13px) clamp(10px,1vw,18px);border-radius:12px}
+.agenda-stop.current .agenda-stop-content{background:#e4f5f4;padding:clamp(13px,1.5vh,22px) clamp(14px,1.4vw,26px)}
+.agenda-stop-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px}
+.agenda-stop-time{color:#088b95;font-size:clamp(13px,1vw,21px);font-weight:700;font-variant-numeric:tabular-nums}
+.agenda-stop-title{color:#142c42;font-size:clamp(17px,1.36vw,29px);font-weight:500;line-height:1.25;overflow-wrap:anywhere}
+.agenda-stop.current .agenda-stop-title{font-size:clamp(19px,1.6vw,34px);font-weight:700}
+.agenda-stop.past .agenda-stop-time,.agenda-stop.past .agenda-stop-title{color:#98a7b1}
+.agenda-stop-now{display:flex;align-items:center;gap:8px;color:#087f87;font-size:clamp(11px,.8vw,17px);font-weight:700;letter-spacing:.08em}
+.agenda-stop-now .agenda-live-dot{width:7px;height:7px}
+.agenda-more{margin:2.5vh 0 0 46px;color:#6a7d89;font-size:clamp(12px,.95vw,20px);display:flex;align-items:center;gap:10px}
+.agenda-more-arrow{color:#079b9e;font-size:1.3em}
+@media(prefers-reduced-motion:reduce){.agenda-live-dot:after{animation:none}}
+
+
+/* v2.0.7 – subtle one-sided depth at the editorial split boundary.
+   Right-hand overlay works for agenda, photos and other editorial fullscreen content. */
+.screen.editorial-full .editorial-right::after,
+.screen.editorial-full.agenda-full .agenda-panel::before{
+  content:"";
+  position:absolute;
+  z-index:20;
+  top:0;
+  bottom:0;
+  left:0;
+  width:clamp(32px,2.8vw,58px);
+  pointer-events:none;
+  background:linear-gradient(to right,rgba(12,43,57,.27) 0%,rgba(12,43,57,.13) 24%,rgba(12,43,57,.045) 60%,rgba(12,43,57,0) 100%);
+}
+
+/* The agenda panel is not .editorial-right: it needs its own positioned overlay. */
+.screen.editorial-full.agenda-full .agenda-panel{position:relative;isolation:isolate}
+.screen.editorial-full.agenda-full .agenda-panel::before{display:block}
+
+/* v2.0.7 – dezente Kacheltiefe, nur CSS; Editorial-Trennschatten unverändert. */
+.screen.tiles .tile {
+  box-shadow: 0 5px 12px rgba(10,39,53,.065), 0 16px 38px rgba(10,39,53,.11);
+}
+.screen.tiles.dark .tile {
+  box-shadow: 0 6px 16px rgba(0,8,17,.19), 0 18px 42px rgba(0,8,17,.26);
+}
+
+/* v2.0.7 – ausschließlich Verwaltungsmaske, keine Änderung der Bildschirmdarstellung */
+.wps-welcome-form .wps-form-section{margin:10px 0 0;padding-top:12px;border-top:1px solid #dce7eb;color:#15394c;font-size:1.05rem}
+.wps-welcome-form #agendaSettings{padding:14px 16px;background:#f1f7f8;border:1px solid #dce9ec;border-radius:12px}
+.wps-welcome-form #agendaEditor[hidden]{display:none!important}
+.wps-welcome-form .wps-summary{padding:13px 16px;background:#e8f5f5;border:1px solid #d0e9e9;border-radius:10px;color:#164657}
+.wps-welcome-form .toggle{font-weight:600}
+
+/* v2.0.7: sichtbarer Wechsel zwischen Empfang und Verwaltung */
+.side .version{padding:0 12px 12px}
+.side .mode-switch{display:flex;align-items:center;gap:10px;padding:12px 13px;margin-bottom:10px;border-radius:12px;background:#1b566b;color:#fff;text-decoration:none;font-weight:700;font-size:13px;line-height:1.3;border:1px solid #39798b;box-shadow:0 5px 16px #041c2a36;transition:background .15s,transform .15s,box-shadow .15s}
+.side .mode-switch:hover,.side .mode-switch:focus-visible{background:#23758b;transform:translateY(-1px);box-shadow:0 8px 18px #041c2a50}
+.side .mode-switch-icon{font-size:18px;line-height:1}
+.side .mode-switch-arrow{margin-left:auto;font-size:18px}
+.side .mode-version{font-size:11px;opacity:.8;line-height:1.5}
+
+/* v2.0.7 – Login-Komfort und Anzeige des angemeldeten Kontos; Display unverändert. */
+.wps-password-wrap{position:relative}
+.wps-password-wrap input{padding-right:50px}
+.wps-password-eye{position:absolute;right:5px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:40px;height:38px;padding:0;background:transparent;color:#526e7c;border-radius:7px}
+.wps-password-eye:hover,.wps-password-eye:focus-visible{background:#e9f3f5;color:#076e7f;outline-offset:2px}
+.wps-password-eye.is-visible{color:#076e7f}
+.wps-current-user{display:inline-flex;align-items:center;gap:8px;max-width:350px;padding:9px 11px;border:1px solid #dce6eb;border-radius:9px;background:white;color:#567180;font-size:12px;line-height:1.3;overflow-wrap:anywhere}
+.wps-current-user strong{color:#14394c;font-weight:600}
+.wps-current-user-dot{width:8px;height:8px;flex:none;background:#119c9e;border-radius:50%}
+@media(max-width:1100px){.wps-current-user{max-width:100%;order:-1}}
+</style></head><body><div id="app"></div><div id="modal" class="modal-back"><div class="modal" id="modalContent"></div></div><div id="toast" class="toast"></div><script>'use strict';
+const KEY = 'wps_welcome_v1', CHAN = 'wps_welcome_updates';
+const $ = s => document.querySelector(s);
+const escapeHtml = s => String(s !== null && s !== void 0 ? s : '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 11);
+const isoDay = d => { let x = new Date(d); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
+const today = isoDay(new Date());
+const tomorrow = isoDay(Date.now() + 86400000);
+const defaultData = () => ({ settings: { layout: 'tiles', theme: 'light', weather: true, defaultDuration: 12, transitionDuration: 1.2, tilesPerFullscreen: 3, welcomeBefore: 60, welcomeAfter: 30, showClock: true, greetings: { morning: 'Guten Morgen, schön, dass Sie da sind.', day: 'Guten Tag, herzlich willkommen bei WPS.', evening: 'Guten Abend, wir freuen uns auf Sie.' }, greetingTimes: { morningEnd: 11, dayEnd: 18 } }, welcomes: [{ id: uid(), type: 'Training', title: 'iSAQB CPSA-A AGENTA', subtitle: 'Herzlich willkommen bei WPS!', date: tomorrow, start: '09:00', end: '17:00', room: 'Schulungsraum', enabled: true, showInDashboard: true, fullscreen: true, qr: '' }], contents: [{ id: uid(), kind: 'text', title: 'Software. Menschen. Zukunft.', subtitle: 'Wir gestalten digitale Lösungen, die im Alltag funktionieren.', eyebrow: 'WPS Workplace Solutions', duration: 12, enabled: true, media: '', qr: '' }, { id: uid(), kind: 'text', title: 'Softwarearchitektur mit Weitblick', subtitle: 'Von der Idee bis zur nachhaltigen Lösung.', eyebrow: 'Unsere Expertise', duration: 12, enabled: true, media: '', qr: '' }, { id: uid(), kind: 'text', title: 'Gemeinsam besser werden', subtitle: 'Trainings, Austausch und Weiterbildung bei WPS.', eyebrow: 'WPS Academy', duration: 12, enabled: true, media: '', qr: '' }], override: null });
+let data = defaultData();
+const SUPABASE_URL = 'https://ylfzriylcecxvpuyignq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_p3O6hxlHj90fVHAYauIRTQ_RND7uXqM';
+const DISPLAY_URL = SUPABASE_URL + '/functions/v1/welcome-display';
+const SESSION_KEY = 'wps_welcome_auth_v2';
+let session = null, remoteSnapshot = null, saving = false, saveQueue = Promise.resolve();
+try {
+    session = JSON.parse(localStorage.getItem(SESSION_KEY));
+}
+catch (e) { }
+const baseHeaders = () => ({ 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' });
+async function authRefresh() {
+    if (!(session === null || session === void 0 ? void 0 : session.refresh_token))
+        throw Error('Bitte erneut anmelden.');
+    const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: baseHeaders(), body: JSON.stringify({ refresh_token: session.refresh_token }) });
+    const body = await res.json();
+    if (!res.ok)
+        throw Error(body.msg || body.error_description || 'Sitzung abgelaufen');
+    session = body;
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    return session.access_token;
+}
+async function api(path, options = {}, retry = true) {
+    if (!(session === null || session === void 0 ? void 0 : session.access_token))
+        throw Error('Nicht angemeldet');
+    const headers = { ...baseHeaders(), Authorization: 'Bearer ' + session.access_token, ...(options.headers || {}) };
+    const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, { ...options, headers });
+    if (res.status === 401 && retry) {
+        await authRefresh();
+        return api(path, options, false);
+    }
+    if (!res.ok) {
+        const body = await res.text();
+        throw Error('Supabase ' + res.status + ': ' + body.slice(0, 250));
+    }
+    const responseText = await res.text();
+    return responseText ? JSON.parse(responseText) : null;
+}
+async function login(email, password) {
+    const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', { method: 'POST', headers: baseHeaders(), body: JSON.stringify({ email, password }) });
+    const body = await res.json();
+    if (!res.ok)
+        throw Error(body.error_description || body.msg || 'Anmeldung fehlgeschlagen');
+    session = body;
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    await loadRemote();
+    admin();
+}
+function loginScreen(error = '') {
+    document.body.className = '';
+    $('#app').innerHTML = `<div style="min-height:100vh;display:grid;place-items:center;background:#edf4f6;padding:20px"><div style="background:white;padding:32px;border-radius:20px;max-width:440px;width:100%;box-shadow:0 18px 55px #163b4b22"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI1LjQuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjk0IDk0IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyOTQgOTQ7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7Y2xpcC1wYXRoOnVybCgjU1ZHSURfMDAwMDAwNzIyNzI5OTA4NTk2ODgxNjMzODAwMDAwMTc3NTQ0NDAwNjkzNzY4NzMxMTBfKTt9Cgkuc3Qxe2ZpbGw6IzM2QjlDNDt9Cgkuc3Qye2ZpbGw6IzEwMTcyNzt9Cgkuc3Qze2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO2ZpbGw6IzEwMTcyNzt9Cjwvc3R5bGU+CjxnPgoJPGc+CgkJPGRlZnM+CgkJCQoJCQkJPHJlY3QgaWQ9IlNWR0lEXzFfIiB4PSIxMyIgeT0iMTcuOCIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIC0wLjcwNzEgMC43MDcxIDAuNzA3MSAtMjAuODcxOSA0My42MDI3KSIgd2lkdGg9IjU4LjQiIGhlaWdodD0iNTguNCIvPgoJCTwvZGVmcz4KCQk8Y2xpcFBhdGggaWQ9IlNWR0lEXzAwMDAwMDAzMDc0MDg0ODY3NjI4NzY5NzUwMDAwMDE0ODM2MzQyNzU1NjIxNDkwNTk0XyI+CgkJCTx1c2UgeGxpbms6aHJlZj0iI1NWR0lEXzFfIiBzdHlsZT0ib3ZlcmZsb3c6dmlzaWJsZTsiLz4KCQk8L2NsaXBQYXRoPgoJCTxnIHN0eWxlPSJjbGlwLXBhdGg6dXJsKCNTVkdJRF8wMDAwMDAwMzA3NDA4NDg2NzYyODc2OTc1MDAwMDAxNDgzNjM0Mjc1NTYyMTQ5MDU5NF8pOyI+CgkJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xMC40LDM3LjRjMi41LTIuNSwzLjgtMy44LDUuMy00LjNjMS4zLTAuNCwyLjctMC40LDMuOSwwYzEuNSwwLjUsMi43LDEuNyw1LjMsNC4zbDMuNSwzLjUgICAgIGMyLjEsMi4xLDMuMiwzLjIsMy42LDQuNGMwLjQsMS4xLDAuNCwyLjIsMCwzLjNjLTAuNCwxLjItMS41LDIuMy0zLjYsNC40bC0zLjUsMy41Yy0yLjUsMi41LTMuOCwzLjgtNS4zLDQuMyAgICAgYy0xLjMsMC40LTIuNywwLjQtMy45LDBjLTEuNS0wLjUtMi43LTEuNy01LjMtNC4zbC0yLjMtMi4zYy0yLjUtMi41LTMuOC0zLjgtNC4zLTUuM2MtMC40LTEuMy0wLjQtMi43LDAtMy45ICAgICBjMC41LTEuNSwxLjctMi43LDQuMy01LjNMMTAuNCwzNy40eiIvPgoJCQk8cGF0aCBjbGFzcz0ic3QyIiBkPSJNNzIuMiwzNS43TDQ2LjcsMTAuMmMtMi41LTIuNS02LjUtMi41LTksMEwyOS45LDE4Yy0yLjUsMi41LTIuNSw2LjUsMCw5YzAsMCwxMy41LDEzLDE1LjYsMTZzMi4xLDUsMCw4ICAgICBTMjkuOSw2NywyOS45LDY3Yy0yLjUsMi41LTIuNSw2LjUsMCw5bDcuNyw3LjdjMi41LDIuNSw2LjUsMi41LDksMGwyNS0yNS4xYzUuMy01LjMsOC04LjIsOC0xMS43Qzc5LjcsNDMuNiw3Ny4yLDQwLjcsNzIuMiwzNS43ICAgICB6Ii8+CgkJPC9nPgoJPC9nPgo8L2c+CjxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yODguOSwzMy4yYy0xLDEuMS0xLjYsMS42LTIsMS45Yy0xLjEsMC43LTEuNywwLjgtMi45LDAuNWMtMC41LTAuMS0xLjUtMC42LTMuNC0xLjVjLTEuNy0wLjgtMy42LTEuMy01LjUtMS4zICBjLTEuNSwwLTIuOSwwLjMtNC4xLDAuOWMtMS4yLDAuNi0xLjgsMS42LTEuOCwzYzAsMS4zLDAuNywyLjMsMiwyLjljMS40LDAuNiwzLjcsMS4yLDYuNywxLjljMS44LDAuNCwzLjYsMC45LDUuNCwxLjYgIGMxLjksMC43LDMuNSwxLjYsNSwyLjhzMi43LDIuNiwzLjYsNC4yYzAuOSwxLjcsMS40LDMuNywxLjQsNmMwLDMtMC42LDUuNi0xLjgsNy43Yy0xLjIsMi4xLTIuOCwzLjctNC44LDUgIGMtMS45LDEuMy00LjEsMi4yLTYuNiwyLjhjLTIuNCwwLjYtNC45LDAuOS03LjMsMC45Yy0zLjksMC03LjgtMC42LTExLjYtMS44Yy0zLTEtNS43LTIuNS03LjktNC4zYy0wLjctMC42LTEtMC44LTEuMS0xLjMgIGMwLTAuNCwwLjMtMC44LDAuOS0xLjVsMy4xLTMuM2MxLjktMiwyLjgtMi45LDMuOC0zLjFjMS0wLjIsMi42LDAuNiw1LjgsMi4zYzAsMCwwLDAsMC4xLDBjMi4xLDEsNC4yLDEuNSw2LjYsMS41ICBjMS4zLDAsMi41LTAuMywzLjgtMC45YzEuMy0wLjYsMS45LTEuNywxLjktMy4zYzAtMS41LTAuOC0yLjYtMi4zLTMuM3MtNC0xLjQtNy4yLTIuMmMtMS43LTAuNC0zLjMtMC45LTUtMS41cy0zLjItMS41LTQuNS0yLjYgIHMtMi4zLTIuNC0zLjItNGMtMC44LTEuNi0xLjMtMy41LTEuMy01LjhjMC0yLjksMC42LTUuMywxLjgtNy4zYzEuMi0yLjEsMi44LTMuNyw0LjctNWMxLjktMS4zLDQtMi4yLDYuNC0yLjhjMi40LTAuNiw0LjctMSw3LTEgIGMzLjYsMCw3LjEsMC42LDEwLjUsMS43YzIuOCwwLjksNS4yLDIuMSw3LjIsMy43YzAuNywwLjYsMS4xLDAuOCwxLjEsMS4zYzAsMC40LTAuMywwLjgtMSwxLjVMMjg4LjksMzMuMnoiLz4KPHBhdGggY2xhc3M9InN0MyIgZD0iTTI0NC4yLDQ3YzAsMTQtMTAuOCwyNS4zLTI0LDI1LjNjLTUuMiwwLTEwLjEtMi0xNC01LjJ2MS41djE4LjJjMCwxLjYsMCwyLjQtMC41LDNzLTEuMywwLjctMi44LDFsLTkuNCwxLjYgIGMtMS4xLDAuMi0xLjYsMC4zLTIsMHMtMC40LTAuOS0wLjQtMlYyNWMwLTAuOSwwLTEuNCwwLjMtMS43czAuOC0wLjMsMS43LTAuM2g5YzEuMiwwLDIuMiwwLjgsMi42LDEuOWwwLjcsMi4zICBjMCwwLjEsMC4xLDAuMiwwLjEsMC4ybDAsMGM0LjEtMy41LDkuMi01LjgsMTQuNy01LjhDMjMzLjUsMjEuNywyNDQuMiwzMywyNDQuMiw0N3ogTTIxNi44LDU5LjRjNi43LDAsMTIuMS01LjUsMTIuMS0xMi4yICBTMjIzLjUsMzUsMjE2LjgsMzVjLTYuNywwLTEyLjEsNS41LTEyLjEsMTIuMkMyMDQuNyw1NCwyMTAuMSw1OS40LDIxNi44LDU5LjR6Ii8+CjxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xNjQuOSw2OS43Yy0wLjIsMC42LTAuMywxLTAuNiwxLjJDMTY0LDcxLDE2My43LDcxLDE2Myw3MWgtMTNjLTAuNywwLTEuMSwwLTEuMy0wLjJjLTAuMy0wLjItMC40LTAuNS0wLjYtMS4yICBsLTktMjguNGMwLTAuMS0wLjEtMC4xLTAuMS0wLjFjLTAuMSwwLTAuMSwwLTAuMSwwLjFsLTguOCwyOC40Yy0wLjIsMC43LTAuMywxLTAuNiwxLjJzLTAuNiwwLjItMS4zLDAuMmgtMTNjLTAuNywwLTEsMC0xLjMtMC4yICBzLTAuNC0wLjUtMC42LTEuMkw5OCwyNS43Yy0wLjQtMS4yLTAuNi0xLjgtMC4zLTIuMmMwLjMtMC41LDEtMC41LDIuMi0wLjVoOC4xYzIuOSwwLDQuNCwwLDUuNSwwLjhzMS41LDIuMiwyLjIsNS4xbDYuNiwyNC4zICBjMCwwLjEsMC4xLDAuMSwwLjIsMC4xczAuMi0wLjEsMC4yLTAuMWw3LjMtMjUuOWMwLjYtMi4xLDAuOS0zLjIsMS43LTMuOGMwLjgtMC42LDEuOS0wLjYsNC4xLTAuNmg2LjljMi4yLDAsMy4yLDAsNCwwLjYgIHMxLjEsMS42LDEuNywzLjdsNy42LDI2YzAsMC4xLDAuMSwwLjEsMC4xLDAuMWMwLjEsMCwwLjEsMCwwLjEtMC4xbDYuNy0yNC40YzAuOC0yLjgsMS4yLTQuMiwyLjItNS4xYzEuMS0wLjgsMi41LTAuOCw1LjUtMC44aDcuNSAgYzEuMywwLDEuOSwwLDIuMiwwLjRzMC4xLDEtMC4zLDIuMkwxNjQuOSw2OS43eiIvPgo8L3N2Zz4=" alt="WPS Workplace Solutions" style="width:210px;max-width:100%;height:auto;max-height:82px;object-fit:contain;object-position:left center"><h1 style="margin:20px 0 8px">Welcome Manager</h1><p>Mit Deinem WPS-Zugang anmelden</p><form id="loginForm"><div class="field"><label>E-Mail-Adresse</label><input name="email" type="email" required autocomplete="username"></div><div class="field"><label>Passwort</label><div class="wps-password-wrap"><input id="loginPassword" name="password" type="password" required autocomplete="current-password" aria-label="Passwort"><button type="button" class="wps-password-eye" id="toggleLoginPassword" aria-label="Passwort anzeigen" aria-pressed="false" title="Passwort anzeigen"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div><p id="loginError" style="color:#b3261e">${escapeHtml(error)}</p><button type="submit" style="width:100%;margin-top:12px">Anmelden</button></form></div></div>`;
+    const loginEye = $('#toggleLoginPassword'), loginPassword = $('#loginPassword');
+    loginEye.onclick = () => { const visible = loginPassword.type === 'password'; loginPassword.type = visible ? 'text' : 'password'; loginEye.setAttribute('aria-pressed', String(visible)); loginEye.setAttribute('aria-label', visible ? 'Passwort verbergen' : 'Passwort anzeigen'); loginEye.title = visible ? 'Passwort verbergen' : 'Passwort anzeigen'; loginEye.classList.toggle('is-visible', visible); };
+    $('#loginForm').onsubmit = async (e) => { e.preventDefault(); const b = $('#loginForm button'); b.disabled = true; $('#loginError').textContent = ''; try {
+        await login(e.target.email.value, e.target.password.value);
+    }
+    catch (err) {
+        $('#loginError').textContent = err.message;
+        b.disabled = false;
+    } };
+}
+async function loadRemote() {
+    var _a, _b, _c, _d;
+    const [welcomes, contents, states] = await Promise.all([api('welcomes?select=id,data'), api('contents?select=id,data'), api('app_state?select=id,data')]);
+    const settings = (_a = states.find(x => x.id === 'settings')) === null || _a === void 0 ? void 0 : _a.data;
+    const override = (_d = (_c = (_b = states.find(x => x.id === 'override')) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.value) !== null && _d !== void 0 ? _d : null;
+    // Kein Demoinhalt auf dem Produktivsystem anzeigen.
+    data = { settings: { ...defaultData().settings, ...(settings || {}) }, welcomes: welcomes.map(x => x.data), contents: contents.map(x => x.data), override };
+    remoteSnapshot = JSON.parse(JSON.stringify(data));
+}
+async function persist() {
+    const before = remoteSnapshot || { welcomes: [], contents: [], settings: null, override: null };
+    for (const table of ['welcomes', 'contents']) {
+        const prior = new Map(before[table].map(x => [x.id, JSON.stringify(x)]));
+        const current = new Map(data[table].map(x => [x.id, JSON.stringify(x)]));
+        for (const [id, value] of current) {
+            if (prior.get(id) !== value) {
+                await api(table, { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify({ id, data: JSON.parse(value), updated_at: new Date().toISOString() }) });
+            }
+        }
+        for (const id of prior.keys()) {
+            if (!current.has(id))
+                await api(table + '?id=eq.' + encodeURIComponent(id), { method: 'DELETE' });
+        }
+    }
+    for (const [id, value] of [['settings', data.settings], ['override', { value: data.override }]]) {
+        if (JSON.stringify(id === 'settings' ? before.settings : before.override) !== JSON.stringify(id === 'settings' ? value : value.value)) {
+            await api('app_state', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify({ id, data: value, updated_at: new Date().toISOString() }) });
+        }
+    }
+    remoteSnapshot = JSON.parse(JSON.stringify(data));
+}
+function save() {
+    const next = JSON.parse(JSON.stringify(data));
+    saveQueue = saveQueue.then(async () => { data = next; await persist(); refresh(); toast('In Supabase gespeichert'); }).catch(err => { console.error(err); alert('Speichern fehlgeschlagen: ' + err.message + '\nBitte die Seite nicht schließen und erneut versuchen.'); });
+    return saveQueue;
+}
+// v2.0.7: A hung network request must not block subsequent display updates.
+let displayLoadPending = false;
+async function loadDisplay() {
+    var _a;
+    if (displayLoadPending)
+        return;
+    displayLoadPending = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+        const res = await fetch(DISPLAY_URL, { cache: 'no-store', signal: controller.signal });
+        if (!res.ok)
+            throw Error('Empfangsschnittstelle ' + res.status);
+        const incoming = await res.json();
+        if (incoming.status !== 'ready' || !Array.isArray(incoming.welcomes) || !Array.isArray(incoming.contents))
+            throw Error('Ungültige Empfangsdaten');
+        const settings = { ...defaultData().settings, ...(incoming.settings && typeof incoming.settings === 'object' ? incoming.settings : {}) };
+        const override = (_a = incoming.override) !== null && _a !== void 0 ? _a : null;
+        const next = { settings, welcomes: incoming.welcomes, contents: incoming.contents, override };
+        if (JSON.stringify(next) !== JSON.stringify(data)) {
+            data = next;
+            renderScreen(true);
+        }
+    }
+    finally {
+        clearTimeout(timeout);
+        displayLoadPending = false;
+    }
+}
+function refreshDisplaySafely() { loadDisplay().catch(err => console.warn('Display-Synchronisierung:', err)); }
+async function startApp() {
+    if (new URLSearchParams(location.search).has('display')) {
+        data = { settings: defaultData().settings, welcomes: [], contents: [], override: null };
+        display();
+        refreshDisplaySafely();
+        setInterval(refreshDisplaySafely, 15000);
+        window.addEventListener('online', refreshDisplaySafely);
+        document.addEventListener('visibilitychange', () => { if (!document.hidden)
+            refreshDisplaySafely(); });
+        return;
+    }
+    if (!(session === null || session === void 0 ? void 0 : session.access_token)) {
+        loginScreen();
+        return;
+    }
+    try {
+        await loadRemote();
+        admin();
+    }
+    catch (e) {
+        try {
+            await authRefresh();
+            await loadRemote();
+            admin();
+        }
+        catch (err) {
+            session = null;
+            localStorage.removeItem(SESSION_KEY);
+            loginScreen('Bitte erneut anmelden.');
+        }
+    }
+}
+async function updateOwnPassword(newPassword) {
+    if (!(session === null || session === void 0 ? void 0 : session.access_token))
+        throw Error('Bitte erneut anmelden.');
+    const request = () => fetch(SUPABASE_URL + '/auth/v1/user', { method: 'PUT', headers: { ...baseHeaders(), Authorization: 'Bearer ' + session.access_token }, body: JSON.stringify({ password: newPassword }) });
+    let response = await request();
+    if (response.status === 401) {
+        await authRefresh();
+        response = await request();
+    }
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok)
+        throw Error(payload.msg || payload.error_description || payload.message || payload.error || 'Passwortänderung fehlgeschlagen (' + response.status + ')');
+    return payload;
+}
+function changePasswordDialog() {
+    const html = `<h2>Passwort ändern</h2><p class="muted">Vergib ein neues Passwort für Deinen WPS Welcome Manager Zugang.</p><form id="passwordChangeForm" autocomplete="off"><div class="field"><label for="newWpsPassword">Neues Passwort</label><input id="newWpsPassword" name="newPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" required></div><div class="field" style="margin-top:14px"><label for="confirmWpsPassword">Neues Passwort wiederholen</label><input id="confirmWpsPassword" name="confirmPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password" required></div><p class="muted" style="margin-top:12px">Mindestens 12 Zeichen. Verwende ein individuelles Passwort, das Du nicht für andere Dienste nutzt.</p><p id="passwordChangeError" role="alert" style="color:#a73547"></p><div class="toolbar"><button type="submit" id="passwordChangeSubmit">Passwort speichern</button><button type="button" class="secondary" data-close>Abbrechen</button></div></form>`;
+    $('#modalContent').innerHTML = html;
+    $('#modal').classList.add('open');
+    $('#modalContent [data-close]').onclick = closeModal;
+    const form = $('#passwordChangeForm');
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        const password = form.elements.newPassword.value, confirmPassword = form.elements.confirmPassword.value;
+        const error = $('#passwordChangeError');
+        error.textContent = '';
+        if (password.length < 12) {
+            error.textContent = 'Bitte mindestens 12 Zeichen verwenden.';
+            return;
+        }
+        if (password !== confirmPassword) {
+            error.textContent = 'Die beiden Passwörter stimmen nicht überein.';
+            return;
+        }
+        const button = $('#passwordChangeSubmit');
+        button.disabled = true;
+        button.textContent = 'Wird gespeichert …';
+        try {
+            await updateOwnPassword(password);
+            form.reset();
+            closeModal();
+            toast('Passwort erfolgreich geändert');
+        }
+        catch (err) {
+            error.textContent = err.message;
+            button.disabled = false;
+            button.textContent = 'Passwort speichern';
+        }
+    };
+}
+function toast(s) { let t = $('#toast'); if (!t)
+    return; t.textContent = s; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2500); }
+function formatDate(s) { if (!s)
+    return ''; const [y, m, d] = s.split('-'); return `${d}.${m}.${y}`; }
+;
+function eligible(w, now = new Date()) { var _a, _b, _c, _d; if (!(now instanceof Date))
+    now = new Date(); if (w.agendaEnabled && w.agendaMode === 'permanent' && ((_b = (_a = permanentAgenda(now)) === null || _a === void 0 ? void 0 : _a.welcome) === null || _b === void 0 ? void 0 : _b.id) === w.id)
+    return false; if (!w.enabled || w.fullscreen === false)
+    return false; let start = new Date(`${w.date}T${w.start || '09:00'}:00`); let end = new Date(`${w.date}T${w.end || '17:00'}:00`); let from = new Date(start.getTime() - ((_c = w.beforeMinutes) !== null && _c !== void 0 ? _c : data.settings.welcomeBefore) * 60000), to = new Date(start.getTime() + ((_d = w.afterMinutes) !== null && _d !== void 0 ? _d : data.settings.welcomeAfter) * 60000); return now >= from && now <= to; }
+function agendaEntries(w) { return (w.agenda || []).filter(x => /^([01]\d|2[0-3]):[0-5]\d$/.test(x.time || '') && String(x.title || '').trim()).slice().sort((a, b) => a.time.localeCompare(b.time)); }
+function activeAgendaItems(now = new Date()) {
+    const day = isoDay(now), clock = now.toTimeString().slice(0, 5);
+    return data.welcomes.filter(w => w.enabled && w.agendaEnabled && w.agendaMode !== 'permanent' && w.date === day && w.start <= clock && clock < (w.end || '23:59') && agendaEntries(w).length).map(w => ({ id: 'agenda-' + w.id, kind: 'agenda', welcome: w, title: w.title, subtitle: w.subtitle, eyebrow: 'HEUTE BEI DER WPS', duration: Math.max(8, Number(w.agendaDuration) || 20) }));
+}
+function permanentAgenda(now = new Date()) {
+    const day = isoDay(now), clock = now.toTimeString().slice(0, 5);
+    const w = data.welcomes.find(w => w.enabled && w.agendaEnabled && w.agendaMode === 'permanent' && w.date === day && w.start <= clock && clock < (w.end || '23:59') && agendaEntries(w).length);
+    return w ? { id: 'agenda-' + w.id, kind: 'agenda', welcome: w, title: w.title, subtitle: w.subtitle, duration: 20 } : null;
+}
+function fullRotationItems() { return [...data.contents.filter(c => c.enabled && c.displayMode === 'fullscreen'), ...activeAgendaItems()]; }
+function agendaRight(item, now = new Date()) {
+    const w = item.welcome, entries = agendaEntries(w), time = now.toTimeString().slice(0, 5);
+    const current = entries.findLastIndex((x, i) => x.time <= time && (i === entries.length - 1 ? time < (w.end || '23:59') : time < entries[i + 1].time));
+    // Ein vergangener Halt + der aktuelle Halt + bis zu fünf kommende Halte.
+    const focus = current >= 0 ? current : 0;
+    const from = Math.max(0, focus - 1);
+    const visible = entries.slice(from, from + 7);
+    const running = current >= 0;
+    const rows = visible.map((x, j) => {
+        var _a;
+        const i = from + j, status = i === current ? 'current' : i < current ? 'past' : 'future';
+        const end = ((_a = entries[i + 1]) === null || _a === void 0 ? void 0 : _a.time) || (w.end || '');
+        const timeLabel = x.time + (i === current && end ? ' – ' + end : '');
+        return `<div class="agenda-stop ${status}"><span class="agenda-stop-dot"></span><div class="agenda-stop-content"><div class="agenda-stop-top"><span class="agenda-stop-time">${escapeHtml(timeLabel)} Uhr</span>${status === 'current' ? '<span class="agenda-stop-now"><span class="agenda-live-dot"></span>JETZT</span>' : ''}</div><div class="agenda-stop-title">${escapeHtml(x.title)}</div></div></div>`;
+    }).join('');
+    const remaining = entries.length - (from + visible.length);
+    const status = running ? '<span class="agenda-live-pill"><span class="agenda-live-dot"></span>LIVE</span>' : `<span class="agenda-live-pill">BEGINN ${escapeHtml(entries[0].time)} UHR</span>`;
+    const more = remaining > 0 ? `<div class="agenda-more"><span class="agenda-more-arrow">↓</span>Weitere ${remaining} Programmpunkte folgen</div>` : '<div class="agenda-more">Ende des Programms</div>';
+    return `<section class="agenda-panel" data-minute="${escapeHtml(time)}"><div class="agenda-live-header"><div class="agenda-heading">AGENDA</div>${status}</div><div class="agenda-timeline">${rows}</div>${more}</section>`;
+}
+function termStillUpcoming(w, now = new Date()) {
+    var _a, _b;
+    if (!w.enabled || w.showInDashboard === false)
+        return false;
+    const endTime = w.type === 'Besuch'
+        ? new Date(new Date(`${w.date}T${w.start || '09:00'}:00`).getTime() + ((_b = (_a = w.afterMinutes) !== null && _a !== void 0 ? _a : data.settings.welcomeAfter) !== null && _b !== void 0 ? _b : 30) * 60000)
+        : new Date(`${w.date}T${w.end || w.start || '17:00'}:00`);
+    return Number.isFinite(endTime.getTime()) && now <= endTime;
+}
+function upcoming() {
+    const now = new Date();
+    const welcomes = data.welcomes.filter(w => termStillUpcoming(w, now));
+    const contentEvents = data.contents.filter(c => c.enabled && c.showInTermList === true && /^\d{4}-\d{2}-\d{2}$/.test(c.eventDate || '')).map(c => ({ id: 'content-' + c.id, type: 'Veranstaltung', title: c.title, room: c.eventLocation || '', date: c.eventDate, start: c.eventTime || '', end: c.eventTime || '' })).filter(w => { const end = new Date(w.date + 'T' + (w.start || '23:59') + ':00'); return Number.isFinite(end.getTime()) && end >= now; });
+    return [...welcomes, ...contentEvents].sort((a, b) => (a.date + (a.start || '')).localeCompare(b.date + (b.start || '')));
+}
+function getItems() { const now = new Date(); const override = data.override; if (override && override.until > Date.now())
+    return [{ ...override.item, duration: Math.max(5, Math.min(30, Math.ceil((override.until - Date.now()) / 1000))), override: true }]; const welcomes = data.welcomes.filter(w => eligible(w, now)).map(w => ({ id: w.id, kind: 'welcome', title: w.title, room: w.room || '', welcomeType: w.type || 'VERANSTALTUNG', subtitle: [w.subtitle, w.room ? `Raum: ${w.room}` : ''].filter(Boolean).join(' · '), eyebrow: `Herzlich willkommen · ${w.type}`, duration: 15, qr: w.qr || '' })); const regular = data.contents.filter(c => c.enabled && (data.settings.layout !== 'tiles' || c.displayMode !== 'fullscreen')).map(c => ({ ...c, duration: Number(c.duration) || 12 })); let result = []; const max = Math.max(welcomes.length, regular.length); for (let i = 0; i < max; i++) {
+    if (welcomes[i])
+        result.push(welcomes[i]);
+    if (regular[i])
+        result.push(regular[i]);
+} return result.length ? result : [{ id: 'fallback', kind: 'text', title: 'Herzlich willkommen bei WPS', subtitle: 'Workplace Solutions', eyebrow: 'WPS', duration: 15 }]; }
+;
+function renderProgramOverview() {
+    var _a;
+    const full = fullRotationItems();
+    const tiles = data.contents.filter(c => c.enabled && c.displayMode !== 'fullscreen');
+    const n = Math.max(1, Math.min(10, Math.round(Number(data.settings.tilesPerFullscreen) || 3)));
+    const esc = escapeHtml;
+    const rows = [];
+    const add = (title, kind, seconds) => rows.push(`<div class="item"><div><strong>${rows.length + 1}. ${esc(title)}</strong><div class="muted">${esc(kind)} · ${seconds} Sekunden</div></div></div>`);
+    if (full.length) {
+        let slot = 0;
+        for (const c of full) {
+            add(c.title || 'Vollbildbeitrag', 'Vollbild', Math.max(5, Number(c.duration) || 12));
+            for (let j = 0; j < n; j++, slot++) {
+                const t = tiles.length ? tiles[slot % tiles.length] : null;
+                add((t === null || t === void 0 ? void 0 : t.title) || 'WPS-Dashboard', 'Dashboard-Kachel', 20);
+            }
+        }
+    }
+    else if (tiles.length) {
+        tiles.forEach(c => add(c.title || 'Dashboard-Kachel', 'Dashboard-Kachel', 20));
+    }
+    else
+        add('WPS-Dashboard', 'Standardansicht', 20);
+    const agendas = data.welcomes.filter(w => w.enabled && w.agendaEnabled && agendaEntries(w).length).map(w => `<div class="item"><div><strong>Agenda: ${esc(w.title)}</strong><div class="muted">${esc(formatDate(w.date))} · ${esc(w.start)}–${esc(w.end)} Uhr · ${agendaEntries(w).length} Programmpunkte · ${w.agendaMode === 'permanent' ? 'dauerhafte Anzeige während der Veranstaltung' : 'in der Vollbildrotation'}</div></div></div>`).join('');
+    const welcomes = data.welcomes.filter(w => w.enabled && w.fullscreen !== false).sort((a, b) => (a.date + ' ' + a.start).localeCompare(b.date + ' ' + b.start));
+    const scheduled = welcomes.length ? welcomes.map(w => `<div class="item"><div><strong>${esc(w.title)}</strong><div class="muted">${esc(formatDate(w.date))} · ${esc(w.start || '09:00')} Uhr · ${esc(w.type || 'Begrüßung')} · Vorrang während des eingestellten Begrüßungszeitfensters</div></div></div>`).join('') : '<p class="muted">Keine aktiven zeitgesteuerten Begrüßungen.</p>';
+    const override = data.override && data.override.until > Date.now() ? `<div class="help"><strong>Sofortmitteilung aktiv:</strong> ${esc(((_a = data.override.item) === null || _a === void 0 ? void 0 : _a.title) || 'Mitteilung')} (hat Vorrang).</div>` : '';
+    return `<div class="card"><h2>Bildschirmprogramm</h2><p class="muted">Vorschau der regulären Rotation ab dem Öffnen der Bildschirmansicht. Vollbildbeiträge wechseln sich mit jeweils ${n} Dashboard-Beiträgen ab. Die Reihenfolge wiederholt sich.</p>${override}<div class="toolbar"><button class="secondary" id="previewDisplay">↗ Live-Vorschau öffnen</button></div>${rows.join('')}<h3>Zeitgesteuerte Begrüßungen</h3><p class="muted">Diese Begrüßungen unterbrechen bei Bedarf die reguläre Rotation und sind deshalb nicht als feste Programmposition aufgeführt.</p>${scheduled}<h3>Veranstaltungsagenden</h3>${agendas || '<p class="muted">Keine aktiven Agenden geplant.</p>'}</div>`;
+}
+function nav(id, label) { return `<button class="nav ${id === 'overview' ? 'active' : ''}" data-tab="${id}">${label}</button>`; }
+;
+function admin() { var _a; document.body.className = ''; const receptionMode = !new URLSearchParams(location.search).has('admin'); $('#app').innerHTML = `<div class="shell"><aside class="side"><img src="assets/logo-dark.svg" alt="WPS"><div style="font-weight:700;padding:0 12px 15px">Welcome Manager <small style="color:#9dc4d0">2.0.7</small></div>${receptionMode ? nav('welcomes', 'Begrüßungen') : nav('overview', 'Übersicht') + nav('welcomes', 'Termine & Begrüßungen') + nav('contents', 'Inhalte & Medien') + nav('program', 'Bildschirmprogramm') + nav('settings', 'Einstellungen')}<div class="version">${receptionMode ? '<a class="mode-switch" href="?admin=1"><span class="mode-switch-icon">⚙</span><span>Zur Verwaltung</span><span class="mode-switch-arrow">→</span></a>' : '<a class="mode-switch" href="?reception=1"><span class="mode-switch-icon">⌂</span><span>Zur Empfangsansicht</span><span class="mode-switch-arrow">→</span></a>'}<div class="mode-version">Supabase verbunden · v2.0.7</div></div></aside><main class="main"><header class="head"><div><h1>WPS Welcome Manager</h1><div class="sub">${receptionMode ? 'Empfang · Begrüßungen einfach verwalten' : 'Digitaler Empfang · Produktivversion 2.0.7'}</div></div><div class="actions"><span class="wps-current-user" title="Aktuell angemeldetes Benutzerkonto"><span class="wps-current-user-dot" aria-hidden="true"></span><span>Angemeldet als <strong>${escapeHtml(((_a = session === null || session === void 0 ? void 0 : session.user) === null || _a === void 0 ? void 0 : _a.email) || 'WPS-Benutzer')}</strong></span></span><button class="secondary" id="changePassword">Passwort ändern</button><button class="secondary" id="logout">Abmelden</button><button class="secondary" id="openDisplay">↗ Bildschirmansicht öffnen</button><button id="addWelcomeTop">${receptionMode ? '+ Neue Begrüßung' : '+ Neuer Termin'}</button></div></header><section class="section active" id="overview"></section><section class="section" id="welcomes"></section><section class="section" id="contents"></section><section class="section" id="program"></section><section class="section" id="settings"></section></main></div>`; document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => switchTab(b.dataset.tab)); $('#changePassword').onclick = changePasswordDialog; $('#logout').onclick = () => { session = null; localStorage.removeItem(SESSION_KEY); loginScreen(); }; $('#openDisplay').onclick = () => window.open(location.pathname + '?display=1', '_blank'); $('#addWelcomeTop').onclick = () => welcomeForm(); refresh(); if (receptionMode)
+    switchTab('welcomes'); }
+;
+function switchTab(tab) { document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tab)); document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === tab)); }
+;
+function refresh() { var _a, _b, _c, _d, _e, _f, _g, _h; if (document.body.classList.contains('display-mode'))
+    return; const up = upcoming(); $('#overview').innerHTML = `<div class="cards"><div class="card"><div class="muted">Aktive Begrüßungen</div><div class="stat">${data.welcomes.filter(w => eligible(w)).length}</div></div><div class="card"><div class="muted">Kommende Begrüßungen</div><div class="stat">${up.length}</div></div><div class="card"><div class="muted">Aktive WPS-Inhalte</div><div class="stat">${data.contents.filter(x => x.enabled).length}</div></div></div><div class="help"><strong>Produktivmodus:</strong> Änderungen werden in Supabase gespeichert. Der Empfangsmonitor erhält ausschließlich freigegebene Daten über die Empfangsschnittstelle.</div><div class="cards" style="grid-template-columns:1fr 1fr"><div class="card"><h2>Nächste Begrüßungen</h2>${up.length ? up.slice(0, 5).map(w => `<div class="item"><div><strong>${escapeHtml(w.title)}</strong><div class="muted">${formatDate(w.date)} · ${escapeHtml(w.start)} Uhr · ${escapeHtml(w.room)}</div></div><span class="tag">${escapeHtml(w.type)}</span></div>`).join('') : '<p class="muted">Keine geplanten Begrüßungen</p>'}<div class="toolbar"><button id="newWelcome">+ Begrüßung anlegen</button></div></div><div class="card"><h2>Sofortmitteilung</h2><p class="muted">Temporär über alle anderen Inhalte legen.</p><div class="field"><label>Nachricht</label><input id="instantText" placeholder="Der Vortrag beginnt in 10 Minuten"></div><div class="toolbar"><button id="instantShow">Jetzt anzeigen (60 Sek.)</button><button class="secondary" id="instantStop">Beenden</button></div></div></div>`; $('#newWelcome').onclick = () => welcomeForm(); $('#instantShow').onclick = () => { const title = $('#instantText').value.trim(); if (!title)
+    return toast('Bitte Nachricht eingeben'); data.override = { until: Date.now() + 60000, item: { id: 'instant', kind: 'text', title, subtitle: '', eyebrow: 'Aktuelle Information', duration: 60 } }; save(); toast('Sofortmitteilung aktiviert'); }; $('#instantStop').onclick = () => { data.override = null; save(); toast('Sofortmitteilung beendet'); }; $('#welcomes').innerHTML = `<div class="card"><div class="row"><div><h2>Termine & Begrüßungen</h2><p class="muted">Hier können Sie Gäste und Veranstaltungen begrüßen. Klicken Sie auf „Neue Begrüßung“, um zu beginnen.</p></div><button id="welcomeAdd">+ Neue Begrüßung</button></div>${data.welcomes.length ? data.welcomes.slice().sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start)).map(w => `<div class="item"><div><strong>${escapeHtml(w.title)}</strong> <span class="tag">${escapeHtml(w.type)}</span><div class="muted">${formatDate(w.date)} · ${escapeHtml(w.start)}–${escapeHtml(w.end)} · ${escapeHtml(w.room)} · ${w.enabled ? 'Aktiv' : 'Deaktiviert'} · Dashboard: ${w.showInDashboard === false ? 'Nein' : 'Ja'} · Vollbild: ${w.fullscreen === false ? 'Nein' : 'Ja'}${w.agendaEnabled ? ' · Agenda: ' + (w.agendaMode === 'permanent' ? 'Dauerhaft' : 'Rotation') : ''}</div></div><div class="actions"><button class="secondary" data-edit-w="${w.id}">Bearbeiten</button><button class="secondary" data-dup-w="${w.id}">Duplizieren</button><button class="danger" data-del-w="${w.id}">Löschen</button></div></div>`).join('') : '<p>Noch keine Begrüßungen.</p>'}</div>`; $('#welcomeAdd').onclick = () => welcomeForm(); document.querySelectorAll('[data-edit-w]').forEach(b => b.onclick = () => welcomeForm(data.welcomes.find(x => x.id === b.dataset.editW))); document.querySelectorAll('[data-dup-w]').forEach(b => b.onclick = () => { const w = data.welcomes.find(x => x.id === b.dataset.dupW); data.welcomes.push({ ...w, id: uid(), title: w.title + ' (Kopie)' }); save(); }); document.querySelectorAll('[data-del-w]').forEach(b => b.onclick = () => { if (confirm('Begrüßung wirklich löschen?')) {
+    data.welcomes = data.welcomes.filter(x => x.id !== b.dataset.delW);
+    save();
+} }); $('#contents').innerHTML = `<div class="card"><div class="row"><div><h2>Inhalte & Medien</h2><p class="muted">Textkarten sowie Bilder und Videos über öffentliche HTTPS-URLs</p></div><button id="contentAdd">+ Inhalt hinzufügen</button></div>${data.contents.map(c => `<div class="item"><div><strong>${escapeHtml(c.title)}</strong> <span class="tag">${escapeHtml(c.kind)}</span><div class="muted">${c.displayMode === 'fullscreen' ? 'Vollbild' : 'Dashboard-Kachel'} · ${c.duration} Sekunden · ${c.enabled ? 'Aktiv' : 'Deaktiviert'}${c.showInTermList ? ' · Terminliste: Ja' : ''}</div></div><div class="actions"><button class="secondary" data-edit-c="${c.id}">Bearbeiten</button><button class="secondary" data-toggle-c="${c.id}">${c.enabled ? 'Deaktivieren' : 'Aktivieren'}</button><button class="danger" data-del-c="${c.id}">Löschen</button></div></div>`).join('')}</div><div class="help">Medien können vorerst über öffentliche HTTPS-Adressen eingebunden werden. Der sichere Medienupload folgt in einem weiteren Schritt.</div>`; $('#contentAdd').onclick = () => contentForm(); document.querySelectorAll('[data-edit-c]').forEach(b => b.onclick = () => contentForm(data.contents.find(x => x.id === b.dataset.editC))); document.querySelectorAll('[data-toggle-c]').forEach(b => b.onclick = () => { let c = data.contents.find(x => x.id === b.dataset.toggleC); c.enabled = !c.enabled; save(); }); document.querySelectorAll('[data-del-c]').forEach(b => b.onclick = () => { if (confirm('Inhalt wirklich löschen?')) {
+    data.contents = data.contents.filter(x => x.id !== b.dataset.delC);
+    save();
+} }); $('#program').innerHTML = renderProgramOverview(); $('#previewDisplay').onclick = () => window.open(location.pathname + '?display=1', '_blank'); $('#settings').innerHTML = `<div class="card"><h2>Einstellungen</h2><div class="fields"><div class="field"><label>Bildschirmlayout</label><select id="layout"><option value="full">Vollbildrotation</option><option value="dashboard">Klassisches Dashboard</option><option value="tiles">Neues Kachel-Dashboard (Standard)</option></select></div><div class="field"><label>Farbwelt</label><select id="theme"><option value="light">Hell – luftiges Dashboard</option><option value="dark">Dunkel – WPS-Nachtblau</option></select></div><div class="field"><label>Wetter in Hamburg</label><select id="weather"><option value="yes">Aktiv (Open-Meteo)</option><option value="no">Ausblenden</option></select></div><div class="field"><label>Standard-Anzeigedauer (Sekunden)</label><input id="duration" type="number" min="5" max="120" value="${data.settings.defaultDuration}"></div><div class="field"><label>Sanfter Übergang (Sekunden)</label><input id="transitionDuration" type="number" min="0.5" max="2" step="0.1" value="${(_a = data.settings.transitionDuration) !== null && _a !== void 0 ? _a : 1.2}"></div><div class="field"><label>Dashboard-Beiträge bis zum nächsten Vollbild</label><input id="tilesPerFullscreen" type="number" min="1" max="10" step="1" value="${Math.max(1, Math.min(10, Number(data.settings.tilesPerFullscreen) || 3))}"><small>Standard: 3 · Bei wenigen Kachelbeiträgen werden diese wiederholt.</small></div><div class="field"><label>Begrüßung vor Beginn (Minuten)</label><input id="before" type="number" min="0" max="480" value="${data.settings.welcomeBefore}"></div><div class="field"><label>Begrüßung nach Beginn (Minuten)</label><input id="after" type="number" min="0" max="480" value="${data.settings.welcomeAfter}"></div><div class="field full"><h3 style="margin:8px 0 4px">Tageszeitbegrüßungen</h3><p class="muted">Die Texte werden im Kachel-Dashboard in einer Zeile angezeigt, sofern genügend Platz vorhanden ist.</p></div><div class="field full"><label>Morgens</label><input id="greetingMorning" maxlength="120" value="${escapeHtml(((_b = data.settings.greetings) === null || _b === void 0 ? void 0 : _b.morning) || 'Guten Morgen, schön, dass Sie da sind.')}"></div><div class="field full"><label>Tagsüber</label><input id="greetingDay" maxlength="120" value="${escapeHtml(((_c = data.settings.greetings) === null || _c === void 0 ? void 0 : _c.day) || 'Guten Tag, herzlich willkommen bei WPS.')}"></div><div class="field full"><label>Abends</label><input id="greetingEvening" maxlength="120" value="${escapeHtml(((_d = data.settings.greetings) === null || _d === void 0 ? void 0 : _d.evening) || 'Guten Abend, wir freuen uns auf Sie.')}"></div><div class="field"><label>Morgen endet um (Uhr)</label><input id="morningEnd" type="number" min="1" max="22" value="${(_f = (_e = data.settings.greetingTimes) === null || _e === void 0 ? void 0 : _e.morningEnd) !== null && _f !== void 0 ? _f : 11}"></div><div class="field"><label>Tag endet um (Uhr)</label><input id="dayEnd" type="number" min="2" max="23" value="${(_h = (_g = data.settings.greetingTimes) === null || _g === void 0 ? void 0 : _g.dayEnd) !== null && _h !== void 0 ? _h : 18}"></div><div class="field full"><label class="toggle"><input id="clock" type="checkbox" ${data.settings.showClock ? 'checked' : ''}> Uhrzeit auf dem Monitor anzeigen</label></div></div><div class="toolbar"><button id="saveSettings">Einstellungen speichern</button><button class="secondary" id="export">Daten exportieren (JSON)</button><button class="secondary" id="import">Daten importieren (JSON)</button><input type="file" accept="application/json" id="importFile" hidden><button class="danger" id="reset">Demo zurücksetzen</button></div></div>`; $('#layout').value = data.settings.layout || 'tiles'; $('#theme').value = data.settings.theme || 'light'; $('#weather').value = data.settings.weather === false ? 'no' : 'yes'; $('#saveSettings').onclick = () => { const morningEnd = Number($('#morningEnd').value), dayEnd = Number($('#dayEnd').value); if (!(morningEnd >= 1 && morningEnd <= 22 && dayEnd > morningEnd && dayEnd <= 23)) {
+    alert('Bitte gültige Wechselzeiten wählen: Morgen vor Tag, jeweils zwischen 1 und 23 Uhr.');
+    return;
+} data.settings = { greetings: { morning: $('#greetingMorning').value.trim() || 'Guten Morgen, schön, dass Sie da sind.', day: $('#greetingDay').value.trim() || 'Guten Tag, herzlich willkommen bei WPS.', evening: $('#greetingEvening').value.trim() || 'Guten Abend, wir freuen uns auf Sie.' }, greetingTimes: { morningEnd, dayEnd }, layout: $('#layout').value, theme: $('#theme').value, weather: $('#weather').value === 'yes', defaultDuration: Math.max(5, Math.min(120, +$('#duration').value || 12)), transitionDuration: Math.max(0.5, Math.min(2, Number($('#transitionDuration').value) || 1.2)), tilesPerFullscreen: Math.max(1, Math.min(10, Math.round(Number($('#tilesPerFullscreen').value) || 3))), welcomeBefore: Math.max(0, +$('#before').value || 0), welcomeAfter: Math.max(0, +$('#after').value || 0), showClock: $('#clock').checked }; save(); toast('Einstellungen gespeichert'); }; $('#export').onclick = () => { let a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })); a.download = 'wps-welcome-manager-backup.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); }; $('#import').onclick = () => $('#importFile').click(); $('#importFile').onchange = async (e) => { try {
+    let x = JSON.parse(await e.target.files[0].text());
+    if (!x.settings || !Array.isArray(x.welcomes) || !Array.isArray(x.contents))
+        throw Error('Ungültige Struktur');
+    if (confirm('Aktuelle Daten durch importierte Daten ersetzen?')) {
+        data = x;
+        save();
+        toast('Daten importiert');
+    }
+}
+catch (err) {
+    alert('Import fehlgeschlagen: ' + err.message);
+} }; $('#reset').onclick = () => alert('Demo-Reset ist in der Produktivversion deaktiviert.'); }
+;
+function modal(html, onSubmit) {
+    $('#modalContent').innerHTML = html;
+    $('#modal').classList.add('open');
+    $('#modalContent').querySelector('[data-close]').onclick = closeModal;
+    const form = $('#modalContent').querySelector('form');
+    const submit = e => { e === null || e === void 0 ? void 0 : e.preventDefault(); try {
+        onSubmit(new FormData(form));
+    }
+    catch (err) {
+        console.error('WPS Speichern fehlgeschlagen:', err);
+        alert('Speichern fehlgeschlagen: ' + ((err === null || err === void 0 ? void 0 : err.message) || String(err)) + '\\nBitte die Meldung weitergeben.');
+    } };
+    form.onsubmit = submit;
+    const saveButton = form.querySelector('button[type="submit"]');
+    if (saveButton) {
+        saveButton.type = 'button';
+        saveButton.onclick = submit;
+    }
+}
+function closeModal() { $('#modal').classList.remove('open'); }
+;
+$('#modal').onclick = e => { if (e.target.id === 'modal')
+    closeModal(); };
+function field(name, label, value = '', type = 'text', extra = '') { return `<div class="field"><label>${label}</label><input name="${name}" type="${type}" value="${escapeHtml(value)}" ${extra}></div>`; }
+function welcomeForm(w) {
+    var _a, _b, _c, _d;
+    const edit = !!w;
+    w = w || { type: 'Besuch', title: '', subtitle: 'Herzlich willkommen bei der WPS!', date: today, start: '09:00', end: '17:00', room: '', qr: '', enabled: true, showInDashboard: true, fullscreen: true };
+    const isVisit = w.type === 'Besuch';
+    const agendaRows = (w.agenda || []).map(x => `<div class="agenda-edit-row"><input type="time" class="agenda-time-input" aria-label="Beginn des Programmpunkts" value="${escapeHtml(x.time || '')}"><input type="text" class="agenda-title-input" aria-label="Bezeichnung des Programmpunkts" placeholder="Bezeichnung des Programmpunkts" value="${escapeHtml(x.title || '')}"><button type="button" class="secondary agenda-remove">Entfernen</button></div>`).join('');
+    modal(`<h2>${edit ? 'Termin bearbeiten' : 'Neuen Termin anlegen'}</h2><p class="muted">Zuerst die Termindaten eingeben, anschließend die gewünschte Anzeige auf dem Empfangsmonitor festlegen.</p><form novalidate><div class="fields wps-welcome-form">
+ <div class="field full"><h3 class="wps-form-section">1. Termindaten</h3></div>
+ <div class="field"><label for="welcomeTypeInput">Art des Termins</label><select id="welcomeTypeInput" name="type">${['Besuch', 'Training', 'Veranstaltung', 'Meetup', 'Workshop'].map(t => `<option ${w.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select><div class="muted">Bei einem Besuch wird die Begrüßung im eingestellten Zeitfenster angezeigt. Für andere Terminarten kann die Agenda rotieren oder dauerhaft erscheinen.</div></div>
+ <div class="field full"><label id="welcomeTitleLabel" for="welcomeTitleInput">${({ Besuch: 'Name des Gastes', Training: 'Name des Trainings', Veranstaltung: 'Name der Veranstaltung', Meetup: 'Name des Meetups', Workshop: 'Name des Workshops' })[w.type] || 'Name des Termins'}</label><textarea id="welcomeTitleInput" name="title" rows="2" required placeholder="${({ Besuch: 'Vor- und Nachname', Training: 'z. B. iSAQB CPSA-A AGENTA', Veranstaltung: 'z. B. software@work 2026', Meetup: 'z. B. Domain-Driven Design Hamburg', Workshop: 'z. B. roads@work Community Workshop' })[w.type] || 'Bezeichnung eingeben'}" style="resize:vertical;min-height:72px;line-height:1.45">${escapeHtml(w.title)}</textarea><div class="muted">Mit Enter kann ein Zeilenumbruch für die Vollbildanzeige eingefügt werden.</div></div>
+ ${field('date', 'Datum', w.date, 'date', 'required')}
+ ${field('start', isVisit ? 'Ankunftszeit' : 'Beginn', w.start, 'time', 'required')}
+ <div id="welcomeEndField">${field('end', 'Ende', w.end || '17:00', 'time', 'required')}</div>
+ ${field('room', 'Raum / Ort (optional)', w.room)}
+ <div class="field full"><h3 class="wps-form-section">2. Anzeige auf dem Empfangsmonitor</h3><p class="muted">Wählen Sie aus, welche Informationen Besucher sehen sollen.</p></div>
+ <div class="field full"><label class="toggle"><input name="enabled" id="welcomeEnabled" type="checkbox" ${w.enabled ? 'checked' : ''} style="width:auto"> Termin aktivieren</label><div class="muted">Deaktivierte Termine werden nicht auf dem Empfangsmonitor angezeigt.</div></div>
+ <div class="field full"><label class="toggle"><input name="showInDashboard" type="checkbox" ${w.showInDashboard !== false ? 'checked' : ''} style="width:auto"> In der Terminliste anzeigen</label><div class="muted">Der Termin erscheint in der Kachel „Die nächsten Termine“.</div></div>
+ <div class="field full"><label class="toggle"><input name="fullscreen" id="welcomeFullscreen" type="checkbox" ${w.fullscreen !== false ? 'checked' : ''} style="width:auto"> Als Vollbildbegrüßung anzeigen</label><div class="muted">Die Begrüßung erscheint im eingestellten Zeitfenster und hat Vorrang vor der normalen Rotation.</div></div>
+ <div class="field full" id="welcomeAgendaSection"><h3 class="wps-form-section">3. Programm / Agenda (optional)</h3><label class="toggle"><input type="checkbox" name="agendaEnabled" id="agendaEnabled" ${w.agendaEnabled ? 'checked' : ''} style="width:auto"> Agenda auf dem Bildschirm anzeigen</label><p class="muted">Für Veranstaltungen mit mehreren Programmpunkten. Die Anzeige folgt automatisch den Startzeiten.</p></div>
+ <div class="field full" id="agendaSettings"><div class="field full"><label for="welcomeAgendaMode">Anzeigeart für die Agenda</label><select name="agendaMode" id="welcomeAgendaMode"><option value="rotation" ${w.agendaMode !== 'permanent' ? 'selected' : ''}>In der normalen Rotation</option><option value="permanent" ${w.agendaMode === 'permanent' ? 'selected' : ''}>Dauerhaft während der Veranstaltung</option></select><div class="muted">Rotation: Die Agenda erscheint im Wechsel mit den übrigen Beiträgen. Dauerhaft: Die Agenda bleibt während der Veranstaltung sichtbar. Sofortmitteilungen haben Vorrang.</div></div><div id="agendaEditor"><p class="muted">Pro Programmpunkt nur Beginn und Bezeichnung eingeben. Das Ende ergibt sich aus dem nächsten Beginn; der letzte Punkt endet mit der Veranstaltung.</p><div id="agendaRows">${agendaRows}</div><button type="button" class="secondary" id="agendaAdd">+ Programmpunkt hinzufügen</button></div></div>
+ <div class="field full"><details class="wps-advanced"><summary>Erweiterte Einstellungen</summary><div class="fields" style="margin-top:16px">
+ <div class="field full"><label for="welcomeSubtitle">Begrüßungstext (optional)</label><input id="welcomeSubtitle" name="subtitle" value="${escapeHtml(w.subtitle || '')}" placeholder="z. B. Herzlich willkommen bei der WPS!"><div class="muted">Erscheint unter dem Titel in der Vollbildbegrüßung.</div></div>
+ <div class="field full"><label for="welcomeQr">Link für QR-Code (optional)</label><input id="welcomeQr" name="qr" type="url" value="${escapeHtml(w.qr || '')}" placeholder="https://..."><div class="muted">Aus diesem Link wird auf dem Bildschirm ein QR-Code erzeugt. Bitte eine vollständige HTTPS-Adresse verwenden.</div></div>
+ <div class="field full"><strong>Individuelles Zeitfenster für die Vollbildbegrüßung</strong><p class="muted">Leer lassen für den Standard: ${Number((_a = data.settings.welcomeBefore) !== null && _a !== void 0 ? _a : 60)} Minuten vor Beginn bis ${Number((_b = data.settings.welcomeAfter) !== null && _b !== void 0 ? _b : 30)} Minuten nach Beginn.</p></div>
+ ${field('beforeMinutes', 'Vollbildbegrüßung startet … Minuten vor Beginn', (_c = w.beforeMinutes) !== null && _c !== void 0 ? _c : '', 'number', 'min="0" max="480"')}
+ ${field('afterMinutes', 'Vollbildbegrüßung endet … Minuten nach Beginn', (_d = w.afterMinutes) !== null && _d !== void 0 ? _d : '', 'number', 'min="0" max="480"')}
+ </div></details></div>
+ <div class="field full" id="welcomeDisplaySummary" aria-live="polite"></div>
+ </div><div class="toolbar"><button type="submit">Termin speichern</button><button type="button" class="secondary" data-close>Abbrechen</button></div></form>`, f => {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+        const rawAgenda = Array.from(document.querySelectorAll('.agenda-edit-row')).map(r => ({ time: r.querySelector('.agenda-time-input').value, title: r.querySelector('.agenda-title-input').value.trim() }));
+        const visitSelected = f.get('type') === 'Besuch';
+        const obj = { agenda: rawAgenda.filter(x => x.time && x.title).sort((a, b) => a.time.localeCompare(b.time)), agendaEnabled: !visitSelected && f.has('agendaEnabled'), agendaMode: !visitSelected && f.get('agendaMode') === 'permanent' ? 'permanent' : 'rotation', agendaDuration: w.agendaDuration || 20, id: w.id || uid(), type: f.get('type'), title: String(f.get('title')).replace(/\r\n/g, '\n').trim(), subtitle: f.get('subtitle'), room: f.get('room'), date: f.get('date'), start: f.get('start'), end: f.get('end'), qr: f.get('qr'), enabled: f.has('enabled'), showInDashboard: f.has('showInDashboard'), fullscreen: f.has('fullscreen'), beforeMinutes: f.get('beforeMinutes') === '' ? null : Math.max(0, Math.min(480, Number(f.get('beforeMinutes')))), afterMinutes: f.get('afterMinutes') === '' ? null : Math.max(0, Math.min(480, Number(f.get('afterMinutes')))) };
+        if (!obj.title) {
+            alert('Bitte einen Namen oder Titel eingeben.');
+            (_a = $('#welcomeTitleInput')) === null || _a === void 0 ? void 0 : _a.focus();
+            return;
+        }
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(obj.date)) {
+            alert('Bitte ein gültiges Datum eingeben.');
+            (_b = document.querySelector('[name="date"]')) === null || _b === void 0 ? void 0 : _b.focus();
+            return;
+        }
+        if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(obj.start)) {
+            alert('Bitte eine gültige Beginnzeit eingeben.');
+            (_c = document.querySelector('[name="start"]')) === null || _c === void 0 ? void 0 : _c.focus();
+            return;
+        }
+        if (!visitSelected && !/^([01]\d|2[0-3]):[0-5]\d$/.test(obj.end || '')) {
+            alert('Bitte eine gültige Endzeit eingeben.');
+            (_d = document.querySelector('[name="end"]')) === null || _d === void 0 ? void 0 : _d.focus();
+            return;
+        }
+        if (!visitSelected && obj.end < obj.start) {
+            alert('Das Ende darf nicht vor dem Beginn liegen.');
+            (_e = document.querySelector('[name="end"]')) === null || _e === void 0 ? void 0 : _e.focus();
+            return;
+        }
+        if (obj.qr && !obj.qr.toLowerCase().startsWith('https://')) {
+            alert('Der QR-Code-Link muss mit https:// beginnen.');
+            document.querySelector('.wps-advanced').open = true;
+            (_f = $('#welcomeQr')) === null || _f === void 0 ? void 0 : _f.focus();
+            return;
+        }
+        if (obj.agendaEnabled) {
+            if (!obj.agenda.length) {
+                alert('Bitte mindestens einen Programmpunkt hinzufügen oder die Agenda deaktivieren.');
+                (_g = $('#agendaAdd')) === null || _g === void 0 ? void 0 : _g.focus();
+                return;
+            }
+            const incomplete = rawAgenda.findIndex(x => !!x.time !== !!x.title);
+            if (incomplete !== -1) {
+                alert(`Programmpunkt ${incomplete + 1} ist unvollständig. Bitte sowohl Uhrzeit als auch Bezeichnung eintragen.`);
+                (_j = (_h = document.querySelectorAll('.agenda-edit-row')[incomplete]) === null || _h === void 0 ? void 0 : _h.querySelector(!rawAgenda[incomplete].time ? '.agenda-time-input' : '.agenda-title-input')) === null || _j === void 0 ? void 0 : _j.focus();
+                return;
+            }
+            if (obj.agenda.some((x, i) => x.time < obj.start || x.time > obj.end || (x.time === obj.end && i !== obj.agenda.length - 1))) {
+                alert('Agenda-Startzeiten müssen innerhalb der Veranstaltungszeit liegen. Der letzte Programmpunkt darf genau zum Veranstaltungsende beginnen.');
+                return;
+            }
+            if (obj.agenda.some((x, i) => i > 0 && x.time === obj.agenda[i - 1].time)) {
+                alert('Zwei Programmpunkte haben dieselbe Startzeit. Bitte unterschiedliche Uhrzeiten eingeben.');
+                return;
+            }
+        }
+        if (edit)
+            data.welcomes = data.welcomes.map(x => x.id === w.id ? obj : x);
+        else
+            data.welcomes.push(obj);
+        try {
+            save();
+        }
+        catch (err) {
+            console.error('WPS Datenspeicherung fehlgeschlagen:', err);
+            alert('Der Termin konnte nicht gespeichert werden: ' + ((err === null || err === void 0 ? void 0 : err.message) || String(err)));
+            return;
+        }
+        closeModal();
+        toast('Termin gespeichert');
+    });
+    const rows = $('#agendaRows');
+    $('#agendaAdd').onclick = () => { const r = document.createElement('div'); r.className = 'agenda-edit-row'; r.innerHTML = '<input type="time" class="agenda-time-input" aria-label="Beginn des Programmpunkts"><input type="text" class="agenda-title-input" aria-label="Bezeichnung des Programmpunkts" placeholder="Bezeichnung des Programmpunkts"><button type="button" class="secondary agenda-remove">Entfernen</button>'; rows.appendChild(r); };
+    rows.addEventListener('click', e => { if (e.target.classList.contains('agenda-remove')) {
+        e.target.closest('.agenda-edit-row').remove();
+        updateSummary();
+    } });
+    const typeInput = $('#welcomeTypeInput'), titleLabel = $('#welcomeTitleLabel'), titleInput = $('#welcomeTitleInput');
+    const updateSummary = () => {
+        const visit = typeInput.value === 'Besuch';
+        titleLabel.textContent = ({ Besuch: 'Name des Gastes', Training: 'Name des Trainings', Veranstaltung: 'Name der Veranstaltung', Meetup: 'Name des Meetups', Workshop: 'Name des Workshops' })[typeInput.value] || 'Name des Termins';
+        titleInput.placeholder = ({ Besuch: 'Vor- und Nachname', Training: 'z. B. iSAQB CPSA-A AGENTA', Veranstaltung: 'z. B. software@work 2026', Meetup: 'z. B. Domain-Driven Design Hamburg', Workshop: 'z. B. roads@work Community Workshop' })[typeInput.value] || 'Bezeichnung eingeben';
+        document.querySelector('[name="start"]').closest('.field').querySelector('label').textContent = visit ? 'Ankunftszeit' : 'Beginn';
+        const agendaEnabled = !visit && $('#agendaEnabled').checked;
+        $('#welcomeEndField').hidden = visit;
+        $('#welcomeAgendaSection').hidden = visit;
+        $('#agendaSettings').hidden = visit;
+        $('#agendaEditor').hidden = !agendaEnabled;
+        $('#welcomeAgendaMode').disabled = visit;
+        $('#agendaEnabled').disabled = visit;
+        $('#welcomeFullscreen').closest('.field').querySelector('.muted').textContent = visit ? 'Die persönliche Begrüßung wird im festgelegten Zeitfenster dauerhaft eingeblendet. Sofortmitteilungen haben Vorrang.' : 'Die Vollbildbegrüßung erscheint im eingestellten Zeitfenster. Die Agenda kann unabhängig davon in der Rotation oder dauerhaft angezeigt werden.';
+        const enabled = $('#welcomeEnabled').checked;
+        const opts = [];
+        if (!enabled)
+            opts.push('Termin deaktiviert – keine Anzeige');
+        else {
+            if (document.querySelector('[name="showInDashboard"]').checked)
+                opts.push('Terminliste');
+            if ($('#welcomeFullscreen').checked)
+                opts.push(visit ? 'Besuchsbegrüßung im Zeitfenster' : 'Vollbildbegrüßung');
+            if (agendaEnabled)
+                opts.push($('#welcomeAgendaMode').value === 'permanent' ? 'Agenda dauerhaft' : 'Agenda in Rotation');
+            if (!opts.length)
+                opts.push('Keine Anzeige ausgewählt');
+        }
+        $('#welcomeDisplaySummary').innerHTML = `<div class="wps-summary"><strong>Geplante Anzeige:</strong> ${escapeHtml(opts.join(' · '))}</div>`;
+    };
+    typeInput.onchange = updateSummary;
+    $('#agendaEnabled').onchange = updateSummary;
+    $('#welcomeAgendaMode').onchange = updateSummary;
+    $('#welcomeEnabled').onchange = updateSummary;
+    $('#welcomeFullscreen').onchange = updateSummary;
+    document.querySelector('[name="showInDashboard"]').onchange = updateSummary;
+    updateSummary();
+}
+function contentForm(c) { var _a, _b, _c; const edit = !!c; c = c || { kind: 'text', title: '', subtitle: '', eyebrow: 'WPS Workplace Solutions', duration: data.settings.defaultDuration, enabled: true, media: '', qr: '' }; modal(`<h2>${edit ? 'Inhalt bearbeiten' : 'Neuer Inhalt'}</h2><form><div class="fields"><div class="field"><label>Art</label><select name="kind">${[['text', 'Textkarte'], ['image', 'Bild mit Text'], ['video', 'Video mit Text']].map(([v, t]) => `<option value="${v}" ${c.kind === v ? 'selected' : ''}>${t}</option>`).join('')}</select></div>${field('duration', 'Anzeigedauer (Sekunden)', c.duration, 'number', 'min="5" max="120" required')}<div class="field full"><label>Darstellung auf dem Empfangsmonitor</label><select name="displayMode"><option value="tile" ${c.displayMode !== 'fullscreen' ? 'selected' : ''}>Dashboard-Kachel</option><option value="fullscreen" ${c.displayMode === 'fullscreen' ? 'selected' : ''}>Vollbildbeitrag (im Wechsel mit Dashboard)</option></select><div class="muted">Vollbildbeiträge erscheinen zeitgesteuert zwischen Dashboard-Phasen. Aktive Terminbegrüßungen haben Vorrang.</div></div>${field('eyebrow', 'Rubrik / Kategorie', c.eyebrow)}<div class="field full"><label>Überschrift (Enter für manuellen Zeilenumbruch)</label><textarea name="title" rows="3" required>${escapeHtml(c.title)}</textarea><div class="muted">Umbrüche gelten für Kachel und Vollbildansicht.</div></div>${field('subtitle', 'Unterzeile', c.subtitle)}<div class="field full"><h3 style="margin:6px 0">Veranstaltungsinformationen (optional)</h3><p class="muted">Unabhängig vom Zeitraum, in dem der Beitrag auf dem Monitor erscheint.</p></div>${field('eventDate', 'Veranstaltungsdatum', c.eventDate || '', 'date')}${field('eventTime', 'Uhrzeit', c.eventTime || '', 'time')}${field('eventLocation', 'Veranstaltungsort', c.eventLocation || '')}<div class="field full"><label class="toggle"><input type="checkbox" name="showInTermList" ${c.showInTermList === true ? 'checked' : ''} style="width:auto"> Auch in der Terminliste anzeigen</label><div class="muted">Nur bei aktivem Inhalt mit Veranstaltungsdatum. Der Eintrag verschwindet nach dem angegebenen Beginn automatisch aus der Liste.</div></div><div class="field"><label class="toggle"><input type="checkbox" name="showEventDate" ${c.showEventDate !== false ? 'checked' : ''} style="width:auto"> Datum / Uhrzeit anzeigen</label></div><div class="field"><label class="toggle"><input type="checkbox" name="showEventLocation" ${c.showEventLocation !== false ? 'checked' : ''} style="width:auto"> Veranstaltungsort anzeigen</label></div>${field('media', 'Bild-/Video-URL (HTTPS)', c.media, 'url')}<div class="field full" id="imageLayoutFields"><label>Bildlayout</label><select name="imageLayout"><option value="side" ${(!c.imageLayout || c.imageLayout === 'side') ? 'selected' : ''}>Seitlicher Verlauf</option><option value="panel" ${c.imageLayout === 'panel' ? 'selected' : ''}>Transparentes Textpanel</option><option value="split" ${c.imageLayout === 'split' ? 'selected' : ''}>Geteiltes Layout</option><option value="bottom" ${c.imageLayout === 'bottom' ? 'selected' : ''}>Textleiste unten</option></select></div><div class="field full" id="imagePositionFields"><label>Bildausschnitt horizontal: <span id="posLabel">${Number((_a = c.imagePosition) !== null && _a !== void 0 ? _a : 50)} %</span></label><input type="range" name="imagePosition" min="0" max="100" value="${Number((_b = c.imagePosition) !== null && _b !== void 0 ? _b : 50)}"></div><div class="field full" id="imagePreviewField"><label>Bildvorschau</label><div class="image-edit-preview" id="imageEditPreview"><img alt="Bildvorschau"><div class="shade"></div><div class="copy"><span id="imagePreviewTitle"></span><small id="imagePreviewSubtitle"></small></div></div><div class="muted">Die Vorschau zeigt das gewählte Layout. Für die vollständige Darstellung die Bildschirmansicht öffnen.</div></div>${field('qr', 'Optionaler QR-Code-Link (HTTPS)', c.qr, 'url')}${field('qrLabel', 'Beschriftung des QR-Codes', (_c = c.qrLabel) !== null && _c !== void 0 ? _c : 'Mehr Infos')}<div class="field full"><label class="toggle"><input name="enabled" type="checkbox" ${c.enabled ? 'checked' : ''} style="width:auto"> Aktiv</label></div></div><div class="toolbar"><button type="submit">Speichern</button><button type="button" class="secondary" data-close>Abbrechen</button></div></form>`, f => { var _a; const obj = { id: c.id || uid(), kind: f.get('kind'), title: String(f.get('title')).replace(/\r\n/g, '\n').trim(), subtitle: f.get('subtitle'), eventDate: f.get('eventDate') || '', eventTime: f.get('eventTime') || '', eventLocation: String(f.get('eventLocation') || '').trim(), showEventDate: f.has('showEventDate'), showEventLocation: f.has('showEventLocation'), showInTermList: f.has('showInTermList'), eyebrow: f.get('eyebrow'), displayMode: f.get('displayMode') || 'tile', qrLabel: String(f.get('qrLabel') || 'Mehr Infos').trim(), duration: Math.max(5, Math.min(120, Number(f.get('duration')) || 12)), media: f.get('media'), imageLayout: f.get('imageLayout') || 'side', imagePosition: Number((_a = f.get('imagePosition')) !== null && _a !== void 0 ? _a : 50), qr: f.get('qr'), enabled: f.has('enabled') }; if (obj.kind !== 'text' && !/^https:\/\//.test(obj.media))
+    return alert('Für Bilder und Videos ist eine HTTPS-Adresse erforderlich'); if (edit)
+    data.contents = data.contents.map(x => x.id === c.id ? obj : x);
+else
+    data.contents.push(obj); save(); closeModal(); toast('Inhalt gespeichert'); }); const form = $('#modalContent form'); const updateImagePreview = () => { const isImage = form.elements.kind.value === 'image'; ['imageLayoutFields', 'imagePositionFields', 'imagePreviewField'].forEach(id => $('#' + id).classList.toggle('hidden', !isImage)); if (!isImage)
+    return; const box = $('#imageEditPreview'); box.className = 'image-edit-preview ' + form.elements.imageLayout.value; const img = box.querySelector('img'); const url = form.elements.media.value; img.style.display = /^https:\/\//.test(url) ? 'block' : 'none'; if (img.style.display === 'block' && img.src !== url)
+    img.src = url; img.style.objectPosition = form.elements.imagePosition.value + '% center'; $('#posLabel').textContent = form.elements.imagePosition.value + ' %'; $('#imagePreviewTitle').textContent = form.elements.title.value || 'Ihre Überschrift'; $('#imagePreviewSubtitle').textContent = form.elements.subtitle.value || ''; }; form.addEventListener('input', updateImagePreview); form.addEventListener('change', updateImagePreview); updateImagePreview(); }
+;
+function railwayClock() { const ticks = Array.from({ length: 60 }, (_, i) => `<line x1="80" y1="${i % 5 === 0 ? 12 : 9}" x2="80" y2="${i % 5 === 0 ? 29 : 17}" stroke="currentColor" stroke-width="${i % 5 === 0 ? 3.2 : 1.4}" transform="rotate(${i * 6} 80 80)"/>`).join(''); return `<div class="rail-clock" aria-label="Analoge Uhr"><svg viewBox="0 0 160 160" role="img" aria-label="Uhrzeit">${ticks}<g class="hour" id="railHour"><line x1="80" y1="87" x2="80" y2="47" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></g><g class="minute" id="railMinute"><line x1="80" y1="89" x2="80" y2="28" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/></g><g class="second" id="railSecond"><line x1="80" y1="91" x2="80" y2="23" stroke="#f13e48" stroke-width="2.8"/><circle cx="80" cy="23" r="6" fill="#f13e48"/></g><circle cx="80" cy="80" r="3" fill="currentColor"/></svg></div>`; }
+function updateRailwayClock() { const d = new Date(), seconds = d.getSeconds() + d.getMilliseconds() / 1000; const angle = Math.min(seconds / 58.5, 1) * 360; const h = $('#railHour'), m = $('#railMinute'), s = $('#railSecond'); if (h)
+    h.style.transform = `rotate(${(d.getHours() % 12 + d.getMinutes() / 60) * 30}deg)`; if (m)
+    m.style.transform = `rotate(${d.getMinutes() * 6}deg)`; if (s)
+    s.style.transform = `rotate(${angle}deg)`; }
+let lastRenderedWelcomeId = null;
+let index = 0, started = Date.now(), currentSignature = '', currentItem = null, lastTileMinute = -1;
+let weatherData = null, weatherUpdated = 0;
+const weatherLabels = { 0: 'Klar', 1: 'Überwiegend klar', 2: 'Leicht bewölkt', 3: 'Bewölkt', 45: 'Nebel', 48: 'Nebel', 51: 'Leichter Nieselregen', 53: 'Nieselregen', 55: 'Nieselregen', 61: 'Leichter Regen', 63: 'Regen', 65: 'Starker Regen', 71: 'Leichter Schnee', 73: 'Schnee', 75: 'Starker Schnee', 80: 'Regenschauer', 81: 'Regenschauer', 82: 'Starke Schauer', 95: 'Gewitter' };
+function weatherIcon(code) { return [0, 1].includes(code) ? '☀️' : [2, 3].includes(code) ? '⛅' : [45, 48].includes(code) ? '🌫️' : [71, 73, 75].includes(code) ? '❄️' : [95].includes(code) ? '⛈️' : '🌧️'; }
+async function updateWeather() { var _a, _b, _c, _d, _e, _f; if (data.settings.weather === false)
+    return; try {
+    const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=53.5511&longitude=9.9937&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=precipitation_probability_max,temperature_2m_max,temperature_2m_min&timezone=Europe%2FBerlin', { cache: 'no-store' });
+    if (!response.ok)
+        throw Error('Wetterdienst nicht erreichbar');
+    const j = await response.json();
+    weatherData = { temp: Math.round(j.current.temperature_2m), code: j.current.weather_code, feels: Math.round(j.current.apparent_temperature), wind: Math.round(j.current.wind_speed_10m), rain: (_b = (_a = j.daily) === null || _a === void 0 ? void 0 : _a.precipitation_probability_max) === null || _b === void 0 ? void 0 : _b[0], high: Math.round((_d = (_c = j.daily) === null || _c === void 0 ? void 0 : _c.temperature_2m_max) === null || _d === void 0 ? void 0 : _d[0]), low: Math.round((_f = (_e = j.daily) === null || _e === void 0 ? void 0 : _e.temperature_2m_min) === null || _f === void 0 ? void 0 : _f[0]) };
+    weatherUpdated = Date.now();
+    if (document.body.classList.contains('display-mode') && data.settings.layout === 'tiles' && !data.welcomes.some(w => eligible(w)) && !(data.override && data.override.until > Date.now()) && !tilePhase().fullscreen)
+        renderScreen(false);
+}
+catch (e) {
+    weatherData = null;
+} }
+function greeting(now) { const h = now.getHours(), t = data.settings.greetingTimes || {}, g = data.settings.greetings || {}; const a = Math.max(1, Math.min(22, Number(t.morningEnd) || 11)), b = Math.max(a + 1, Math.min(23, Number(t.dayEnd) || 18)); return h < a ? (g.morning || 'Guten Morgen, schön, dass Sie da sind.') : h < b ? (g.day || 'Guten Tag, herzlich willkommen bei WPS.') : (g.evening || 'Guten Abend, wir freuen uns auf Sie.'); }
+function fitTileTitle() {
+    const title = document.getElementById('tileFitTitle');
+    if (!title)
+        return;
+    const parent = title.closest('.tile-feature-copy');
+    if (!parent)
+        return;
+    const text = parent.querySelector('.tile-feature-text');
+    const max = Math.min(54, window.innerWidth * .026), min = 19;
+    let low = min, high = max, best = min;
+    const available = Math.max(55, parent.clientHeight - 12);
+    for (let i = 0; i < 13; i++) {
+        const mid = (low + high) / 2;
+        title.style.fontSize = mid + 'px';
+        const fits = text.scrollHeight <= available && title.scrollWidth <= title.clientWidth + 2;
+        if (fits) {
+            best = mid;
+            low = mid;
+        }
+        else
+            high = mid;
+    }
+    title.style.fontSize = best + 'px';
+}
+function fitEditorialTitle() {
+    const el = document.getElementById('editorialFitTitle');
+    if (!el)
+        return;
+    const area = el.closest('.editorial-main');
+    const max = Math.min(63, innerWidth * .032);
+    let size = max;
+    const available = Math.max(90, area.clientHeight - el.previousElementSibling.offsetHeight - el.nextElementSibling.offsetHeight - innerHeight * .07);
+    for (; size >= 24; size -= 1) {
+        el.style.fontSize = size + 'px';
+        if (el.scrollHeight <= available + 2 && el.scrollWidth <= area.clientWidth + 2)
+            break;
+    }
+}
+function fitFullContentTitle() { const el = document.getElementById('fullContentFitTitle'); if (!el)
+    return; const parent = el.closest('.screen-content'); let size = Math.min(90, innerWidth * .05); el.style.whiteSpace = 'normal'; el.style.overflowWrap = 'normal'; el.style.wordBreak = 'normal'; while (size > 32) {
+    el.style.fontSize = size + 'px';
+    if (el.scrollWidth <= parent.clientWidth + 2 && el.scrollHeight <= innerHeight * .43)
+        break;
+    size -= 2;
+} }
+// Fullscreen items are shown first when the display opens; then a dashboard interval.
+// Use a monotonic page-session anchor instead of wall-clock modulo.
+const displaySessionStart = Date.now();
+function tilePhase() {
+    const full = fullRotationItems();
+    const tilesPerFull = Math.max(1, Math.min(10, Math.round(Number(data.settings.tilesPerFullscreen) || 3)));
+    const tileDuration = 20000;
+    const elapsed = Math.max(0, Date.now() - displaySessionStart);
+    if (!full.length) {
+        const slot = Math.floor(elapsed / tileDuration);
+        return { key: 'tiles-' + slot, fullscreen: false, tileSlot: slot };
+    }
+    const cycle = full.reduce((sum, c) => sum + Math.max(5000, (Number(c.duration) || 12) * 1000) + tilesPerFull * tileDuration, 0);
+    let offset = elapsed % cycle;
+    const cycleIndex = Math.floor(elapsed / cycle);
+    let dashboardOffset = cycleIndex * full.length * tilesPerFull;
+    for (const c of full) {
+        const duration = Math.max(5000, (Number(c.duration) || 12) * 1000);
+        if (offset < duration)
+            return { key: 'full-' + cycleIndex + '-' + c.id, fullscreen: true, item: c };
+        offset -= duration;
+        const tileBlock = tilesPerFull * tileDuration;
+        if (offset < tileBlock) {
+            const tileSlot = dashboardOffset + Math.floor(offset / tileDuration);
+            return { key: 'tiles-' + cycleIndex + '-' + c.id + '-' + tileSlot, fullscreen: false, tileSlot };
+        }
+        offset -= tileBlock;
+        dashboardOffset += tilesPerFull;
+    }
+    return { key: 'tiles-fallback-' + cycleIndex, fullscreen: false, tileSlot: dashboardOffset };
+}
+let displayedVisualKey = '';
+let fadeCleanup = 0;
+let tileFadeCleanup = 0;
+function swapScreen(html, visualKey) {
+    var _a;
+    const root = $('#screenRoot');
+    if (!root)
+        return;
+    const duration = Math.max(.5, Math.min(2, Number(data.settings.transitionDuration) || 1.2));
+    const old = root.querySelector('.screen:not(.wps-exit)');
+    if (fadeCleanup) {
+        clearTimeout(fadeCleanup);
+        fadeCleanup = 0;
+    }
+    if (tileFadeCleanup) {
+        clearTimeout(tileFadeCleanup);
+        tileFadeCleanup = 0;
+        const prev = root.querySelector('.tile-feature.wps-tile-leaving');
+        const inc = root.querySelector('.tile-feature.wps-tile-arriving');
+        if (prev && inc) {
+            prev.replaceWith(inc);
+            inc.classList.remove('wps-tile-arriving');
+            inc.style.cssText = '';
+        }
+    }
+    root.querySelectorAll('.wps-exit').forEach(n => n.remove());
+    const temp = document.createElement('div');
+    temp.innerHTML = html.trim();
+    const next = temp.firstElementChild;
+    if (!next)
+        return;
+    root.style.setProperty('--wps-transition', duration + 's');
+    // Dashboard-to-dashboard: animate only the changing content tile.
+    // Weather, greeting, event list and Swiss clock stay mounted and steady.
+    if (old && old.classList.contains('tiles') && next.classList.contains('tiles') && displayedVisualKey === 'dashboard' && visualKey === 'dashboard') {
+        const previous = old.querySelector('.tile-feature');
+        const incoming = next.querySelector('.tile-feature');
+        if (previous && incoming) {
+            const holder = previous.parentElement;
+            holder.querySelectorAll('.wps-tile-leaving').forEach(el => el.remove());
+            const holderRect = holder.getBoundingClientRect(), tileRect = previous.getBoundingClientRect();
+            incoming.style.left = (tileRect.left - holderRect.left) + 'px';
+            incoming.style.top = (tileRect.top - holderRect.top) + 'px';
+            incoming.style.width = tileRect.width + 'px';
+            incoming.style.height = tileRect.height + 'px';
+            previous.classList.add('wps-tile-leaving');
+            incoming.classList.add('wps-tile-arriving');
+            holder.appendChild(incoming);
+            // Keep other panels fresh without remounting the running railway clock.
+            for (const selector of ['.tile-greeting', '.tile-events', '.tile-footer', '.tile-weather-copy']) {
+                const before = old.querySelector(selector), after = next.querySelector(selector);
+                if (before && after)
+                    before.replaceWith(after);
+            }
+            const done = () => { previous.replaceWith(incoming); incoming.classList.remove('wps-tile-arriving'); incoming.style.cssText = ''; tileFadeCleanup = 0; };
+            tileFadeCleanup = setTimeout(done, duration * 1000 + 100);
+            displayedVisualKey = visualKey;
+            requestAnimationFrame(fitTileTitle);
+            (_a = document.fonts) === null || _a === void 0 ? void 0 : _a.ready.then(fitTileTitle);
+            return;
+        }
+    }
+    if (old && displayedVisualKey !== visualKey) {
+        // Old SVG clock ids must not collide with those in the new scene.
+        old.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+        old.classList.add('wps-exit');
+        next.classList.add('wps-enter');
+        root.appendChild(next);
+        fadeCleanup = setTimeout(() => { old.remove(); next.classList.remove('wps-enter'); fadeCleanup = 0; }, duration * 1000 + 70);
+    }
+    else {
+        root.replaceChildren(next);
+    }
+    displayedVisualKey = visualKey;
+}
+const calendarSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg>';
+const locationSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+function editorialMetadata(c) { let rows = []; if (c.showEventDate !== false && c.eventDate) {
+    const date = new Date(c.eventDate + 'T12:00:00');
+    let label = isNaN(date) ? c.eventDate : date.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+    if (c.eventTime)
+        label += ' · ' + c.eventTime + ' Uhr';
+    rows.push('<div class="editorial-meta-row">' + calendarSvg + '<span>' + escapeHtml(label) + '</span></div>');
+} if (c.showEventLocation !== false && c.eventLocation)
+    rows.push('<div class="editorial-meta-row">' + locationSvg + '<span>' + escapeHtml(c.eventLocation) + '</span></div>'); return rows.length ? '<div class="editorial-meta">' + rows.join('') + '</div>' : ''; }
+function display() { document.body.className = 'display-mode'; $('#app').innerHTML = '<div id="screenRoot"></div>'; renderScreen(true); updateWeather(); setInterval(tick, 250); setInterval(updateRailwayClock, 50); setInterval(updateWeather, 15 * 60 * 1000); document.addEventListener('visibilitychange', () => { if (!document.hidden)
+    renderScreen(true); }); }
+function tick() {
+    var _a;
+    const now = new Date();
+    const isOverride = data.override && data.override.until > Date.now();
+    const welcomes = data.welcomes.filter(w => eligible(w, now));
+    const permanent = !isOverride ? permanentAgenda(now) : null;
+    const tiles = data.settings.layout === 'tiles' && !isOverride && !welcomes.length && !permanent;
+    const phase = tiles ? tilePhase() : null;
+    if ((permanent || tiles && (phase === null || phase === void 0 ? void 0 : phase.fullscreen) && ((_a = phase.item) === null || _a === void 0 ? void 0 : _a.kind) === 'agenda') && document.querySelector('.agenda-panel')) {
+        const panel = document.querySelector('.agenda-panel');
+        if (panel) {
+            const updated = agendaRight(permanent || phase.item, now);
+            if (panel.dataset.minute !== now.toTimeString().slice(0, 5)) {
+                panel.outerHTML = updated;
+                const p = document.querySelector('.agenda-panel');
+                if (p)
+                    p.dataset.minute = now.toTimeString().slice(0, 5);
+            }
+        }
+    }
+    if (permanent) {
+        const key = 'permanent-' + permanent.id;
+        if (currentSignature !== key) {
+            renderScreen(false);
+        }
+        return;
+    }
+    if (tiles) {
+        const phaseKey = phase.key;
+        if (currentSignature !== phaseKey) {
+            renderScreen(false);
+        }
+        return;
+    }
+    const items = (data.settings.layout === 'tiles' && welcomes.length && !isOverride) ? getItems().filter(x => x.kind === 'welcome') : getItems();
+    const sig = items.map(x => x.id).join('|');
+    if (sig !== currentSignature) {
+        currentSignature = sig;
+        index = 0;
+        renderScreen(true);
+        return;
+    }
+    if (!currentItem)
+        return;
+    const duration = (currentItem.duration || 12) * 1000, elapsed = Date.now() - started;
+    const bar = $('#progressBar');
+    if (bar)
+        bar.style.width = `${Math.min(100, elapsed / duration * 100)}%`;
+    if (elapsed >= duration) {
+        index = (index + 1) % items.length;
+        renderScreen(false);
+    }
+}
+function renderScreen(reset) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+    const now = new Date();
+    const isOverride = data.override && data.override.until > Date.now();
+    const activeWelcomes = data.welcomes.filter(w => eligible(w, now));
+    const permanent = !isOverride ? permanentAgenda(now) : null;
+    const tiles = data.settings.layout === 'tiles' && !isOverride && !activeWelcomes.length && !permanent;
+    const phase = permanent ? { fullscreen: true, item: permanent, key: 'permanent-' + permanent.id } : tiles ? tilePhase() : null;
+    const tileFullscreen = !!(phase === null || phase === void 0 ? void 0 : phase.fullscreen);
+    const theme = data.settings.theme || 'light';
+    const logo = theme === 'light' ? 'assets/logo-light.svg' : 'assets/logo-dark.svg';
+    if (tiles && !tileFullscreen) {
+        lastRenderedWelcomeId = null;
+        currentSignature = phase.key;
+        lastTileMinute = Math.floor(Date.now() / 20000);
+        const contents = data.contents.filter(c => c.enabled && c.displayMode !== 'fullscreen');
+        const feature = contents.length ? contents[(phase.tileSlot || 0) % contents.length] : { title: 'Software. Menschen. Zukunft.', subtitle: 'Herzlich willkommen bei WPS!', eyebrow: 'WPS Workplace Solutions' };
+        const media = feature.media && /^https:\/\//.test(feature.media) ? feature.media : '';
+        const photo = media && feature.kind !== 'video' ? `<img src="${escapeHtml(media)}" alt="" style="object-position:${Number((_a = feature.imagePosition) !== null && _a !== void 0 ? _a : 50)}% center">` : feature.kind === 'video' && media ? `<video src="${escapeHtml(media)}" autoplay muted loop playsinline></video>` : '<div class="tile-photo-fallback"></div>';
+        const qr = feature.qr && /^https:\/\//.test(feature.qr) ? `<div class="tile-qr"><span class="tile-qr-label">${escapeHtml(feature.qrLabel || 'Mehr Infos')}</span><img alt="QR-Code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(feature.qr)}"></div>` : '';
+        const events = upcoming().slice(0, 3);
+        const weather = data.settings.weather === false ? '<div class="tile-weather-desc">Wetteranzeige deaktiviert</div>' : weatherData ? `<div class="tile-weather-row"><span class="tile-weather-icon wps-weather-animated ${[0, 1].includes(weatherData.code) ? 'wps-weather-sun' : [2, 3].includes(weatherData.code) ? 'wps-weather-cloud' : [45, 48].includes(weatherData.code) ? 'wps-weather-fog' : [71, 73, 75].includes(weatherData.code) ? 'wps-weather-snow' : [95].includes(weatherData.code) ? 'wps-weather-storm' : 'wps-weather-rain'}" aria-label="${escapeHtml(weatherLabels[weatherData.code] || 'Wetter')}">${weatherIcon(weatherData.code)}</span><span class="tile-temp">${weatherData.temp} °C</span></div><div class="tile-weather-desc">${weatherLabels[weatherData.code] || 'Wechselhaft'}</div><div class="tile-weather-extra"><span>Gefühlt <b>${weatherData.feels}°</b></span><span>Regen <b>${(_b = weatherData.rain) !== null && _b !== void 0 ? _b : "–"} %</b></span><span>Wind <b>${weatherData.wind} km/h</b></span></div>` : '<div class="tile-weather-desc">Wetter momentan nicht verfügbar</div>';
+        swapScreen(`<div class="screen tiles ${theme}"><div class="screen-inner"><div class="tile-header"><img class="screen-logo" src="${logo}" alt="WPS"><div class="tile-greeting"><h1>${escapeHtml(greeting(now))}</h1></div></div><div class="tile-grid"><div class="tile tile-feature"><div class="tile-photo">${photo}</div><div class="tile-feature-copy"><div class="tile-feature-text"><div class="tile-eyebrow">${escapeHtml(feature.eyebrow || 'WPS entdecken')}</div><h2 id="tileFitTitle">${escapeHtml(feature.title || 'Willkommen bei WPS').replace(/\n/g, '<br>')}</h2><p>${escapeHtml(feature.subtitle || '')}</p></div>${qr}</div></div><div class="tile tile-weather"><div class="tile-weather-main"><div class="tile-weather-copy"><div class="tile-eyebrow">Wetter in Hamburg</div>${weather}</div>${data.settings.showClock ? railwayClock() : ''}</div></div><div class="tile tile-events"><h2>Die nächsten Termine</h2>${events.length ? events.map(w => `<div class="tile-event"><div class="tile-date">${escapeHtml(w.date.slice(8, 10))}.${escapeHtml(w.date.slice(5, 7))}.</div><div><div class="tile-event-title">${escapeHtml(w.title)}</div><div class="tile-event-sub">${escapeHtml(w.type)} · ${escapeHtml(w.start)} Uhr${w.room ? ' · ' + escapeHtml(w.room) : ''}</div></div></div>`).join('') : '<div class="tile-event-sub">Zurzeit keine Termine geplant.</div>'}</div></div><div class="tile-footer"><span>WPS Workplace Solutions</span><span>${now.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}</span></div></div></div>`, 'dashboard');
+        updateRailwayClock();
+        requestAnimationFrame(fitTileTitle);
+        (_c = document.fonts) === null || _c === void 0 ? void 0 : _c.ready.then(fitTileTitle);
+        return;
+    }
+    const items = tileFullscreen ? [phase.item] : (data.settings.layout === 'tiles' && activeWelcomes.length && !isOverride) ? getItems().filter(x => x.kind === 'welcome') : getItems();
+    if (!items.length)
+        return;
+    if (tileFullscreen) {
+        currentSignature = phase.key;
+        reset = false;
+        index = 0;
+    }
+    if (reset) {
+        index = 0;
+        currentSignature = items.map(x => x.id).join('|');
+    }
+    index %= items.length;
+    const c = items[index];
+    if (tileFullscreen) {
+        if (c.kind === 'agenda') {
+            lastRenderedWelcomeId = null;
+            currentItem = c;
+            started = Date.now();
+            const w = c.welcome;
+            const left = `<div class="screen editorial-full agenda-full"><div class="editorial-wrap"><section class="editorial-left"><div class="editorial-top"><img class="editorial-logo" src="assets/logo-light.svg" alt="WPS">${data.settings.showClock ? railwayClock() : ''}</div><div class="editorial-main"><div class="editorial-eyebrow">HEUTE BEI DER WPS</div><div class="editorial-title" id="editorialFitTitle">${escapeHtml(w.title).replace(/\n/g, '<br>')}</div><div class="editorial-subtitle">${escapeHtml(w.subtitle || '')}</div>${editorialMetadata({ eventDate: w.date, eventTime: w.start, eventLocation: w.room })}</div><div class="editorial-bottom"><div class="editorial-footer">WPS Workplace Solutions</div></div></section>${agendaRight(c, now)}</div></div>`;
+            swapScreen(left, 'agenda-' + c.id);
+            updateRailwayClock();
+            requestAnimationFrame(fitEditorialTitle);
+            (_d = document.fonts) === null || _d === void 0 ? void 0 : _d.ready.then(fitEditorialTitle);
+            return;
+        }
+        lastRenderedWelcomeId = null;
+        currentItem = c;
+        started = Date.now();
+        const url = c.media && /^https:\/\//.test(c.media) ? c.media : '';
+        const pos = Math.max(0, Math.min(100, Number((_e = c.imagePosition) !== null && _e !== void 0 ? _e : 50)));
+        const photo = url ? (c.kind === 'video' ? `<video id="activeVideo" src="${escapeHtml(url)}" autoplay muted playsinline preload="auto"></video>` : `<img src="${escapeHtml(url)}" alt="" style="object-position:${pos}% center">`) : '<div class="editorial-no-image"></div>';
+        const qr = c.qr && /^https:\/\//.test(c.qr) ? `<div class="editorial-qr"><span>${escapeHtml(c.qrLabel || 'Mehr Infos')}</span><img alt="QR-Code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(c.qr)}"></div>` : '';
+        swapScreen(`<div class="screen editorial-full"><div class="editorial-wrap"><section class="editorial-left"><div class="editorial-top"><img class="editorial-logo" src="assets/logo-light.svg" alt="WPS">${data.settings.showClock ? railwayClock() : ''}</div><div class="editorial-main"><div class="editorial-eyebrow">${escapeHtml(c.eyebrow || 'WPS Workplace Solutions')}</div><div class="editorial-title" id="editorialFitTitle">${escapeHtml(c.title || '').replace(/\n/g, '<br>')}</div><div class="editorial-subtitle">${escapeHtml(c.subtitle || '')}</div>${editorialMetadata(c)}</div><div class="editorial-bottom"><div class="editorial-footer">WPS Workplace Solutions</div>${qr}</div></section><div class="editorial-right">${photo}</div></div></div>`, 'editorial-' + c.id);
+        updateRailwayClock();
+        requestAnimationFrame(fitEditorialTitle);
+        (_f = document.fonts) === null || _f === void 0 ? void 0 : _f.ready.then(fitEditorialTitle);
+        const v = $('#activeVideo');
+        if (v)
+            v.play().catch(() => { });
+        return;
+    }
+    // A single active event must stay mounted: rebuilding the DOM caused a visible flash.
+    if (c.kind === 'welcome' && lastRenderedWelcomeId === c.id && document.querySelector('.screen.welcome-clean')) {
+        currentItem = c;
+        started = Date.now();
+        return;
+    }
+    lastRenderedWelcomeId = c.kind === 'welcome' ? c.id : null;
+    currentItem = c;
+    started = Date.now();
+    const media = c.media && /^https:\/\//.test(c.media) ? c.media : '';
+    const imagePosition = Math.max(0, Math.min(100, Number((_g = c.imagePosition) !== null && _g !== void 0 ? _g : 50)));
+    const mediaHtml = c.kind !== 'video' && media ? `<img class="screen-media" style="object-position:${imagePosition}% center" src="${escapeHtml(media)}" alt="">` : c.kind === 'video' && media ? `<video id="activeVideo" class="screen-media" src="${escapeHtml(media)}" autoplay muted playsinline preload="auto"></video>` : '';
+    const events = upcoming().slice(0, 3);
+    const dashboard = data.settings.layout === 'dashboard' && !activeWelcomes.length && !isOverride;
+    const imageLayout = c.kind !== 'video' && media ? 'image-' + (c.imageLayout || 'side') : '';
+    const isWelcome = c.kind === 'welcome';
+    const qr = c.qr && /^https:\/\//.test(c.qr) ? `<div class="screen-qr"><span class="tile-qr-label">${escapeHtml(c.qrLabel || 'Mehr Infos')}</span><img alt="QR-Code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(c.qr)}"></div>` : '';
+    swapScreen(`<div class="screen screen-fade ${theme} ${dashboard ? 'dash' : ''} ${imageLayout} ${isWelcome ? 'welcome-clean' : ''} ${isWelcome && c.welcomeType === 'Besuch' ? 'welcome-visit' : ''}">${mediaHtml}${mediaHtml ? '<div class="media-shade"></div>' : ''}<div class="screen-inner"><div class="screen-top"><img class="screen-logo" src="${logo}" alt="WPS">${data.settings.showClock ? railwayClock() : ''}</div><div class="screen-body"><div class="screen-content"><div class="eyebrow">${escapeHtml(isWelcome ? (c.welcomeType === 'Besuch' ? 'WIR BEGRÜSSEN' : (c.welcomeType || c.eyebrow || 'VERANSTALTUNG')) : (c.eyebrow || 'WPS Workplace Solutions'))}</div><div class="screen-title" ${tileFullscreen ? 'id="fullContentFitTitle"' : isWelcome ? 'id="eventFitTitle"' : ''}>${escapeHtml(c.title).replace(/\n/g, '<br>')}</div><div class="screen-subtitle">${escapeHtml(isWelcome ? 'Herzlich Willkommen bei der WPS!' : (c.subtitle || ''))}</div>${isWelcome && c.room ? `<div class="event-room">Raum: ${escapeHtml(c.room)}</div>` : ''}</div>${dashboard ? `<div class="dash-panel"><h3>Bei WPS demnächst</h3>${events.length ? events.map(w => `<div class="dash-event">${escapeHtml(w.title)}<small>${formatDate(w.date)} · ${escapeHtml(w.start)} Uhr</small></div>`).join('') : '<div class="dash-event">Herzlich willkommen!</div>'}</div>` : ''}</div><div class="screen-bottom"><span>WPS Workplace Solutions</span><span>${now.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })}</span></div></div>${qr}<div class="progress"><div id="progressBar" style="width:0"></div></div></div>`, 'standard-' + c.id);
+    updateRailwayClock();
+    if (isWelcome) {
+        requestAnimationFrame(fitEventTitle);
+        (_h = document.fonts) === null || _h === void 0 ? void 0 : _h.ready.then(fitEventTitle);
+    }
+    else if (tileFullscreen) {
+        requestAnimationFrame(fitFullContentTitle);
+        (_j = document.fonts) === null || _j === void 0 ? void 0 : _j.ready.then(fitFullContentTitle);
+    }
+    const v = $('#activeVideo');
+    if (v) {
+        v.play().catch(() => { });
+        v.addEventListener('ended', () => { index = (index + 1) % getItems().length; renderScreen(false); }, { once: true });
+    }
+}
+function fitEventTitle() {
+    const el = document.getElementById('eventFitTitle');
+    if (!el)
+        return;
+    const body = el.closest('.screen-body'), content = el.closest('.screen-content');
+    if (!body || !content)
+        return;
+    // Keep a consistent editorial scale, shrink only when text or the whole block needs it.
+    const viewportScale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    const isVisit = !!el.closest('.welcome-visit');
+    const max = isVisit ? Math.min(88 * viewportScale, window.innerWidth * .046) : Math.min(66 * viewportScale, window.innerWidth * .0345);
+    const min = Math.max(24 * viewportScale, 18);
+    const title = (el.textContent || '').trim();
+    const manualLines = title.split(/\r?\n/).length;
+    const maxLines = Math.max(4, Math.min(8, manualLines + 2));
+    // Prefer readable word wrapping and moderate sizes for long titles.
+    const preferred = isVisit ? (title.length > 125 ? 50 : title.length > 90 ? 58 : title.length > 65 ? 68 : 88) : (title.length > 125 ? 42 : title.length > 90 ? 48 : title.length > 65 ? 55 : 66);
+    let low = min, high = Math.max(min, Math.min(max, preferred * viewportScale)), best = low;
+    el.style.hyphens = 'none';
+    el.style.wordBreak = 'normal';
+    el.style.overflowWrap = 'normal';
+    for (let n = 0; n < 16; n++) {
+        const mid = (low + high) / 2;
+        el.style.fontSize = mid + 'px';
+        const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || mid * 1.16;
+        const lineCount = Math.round(el.getBoundingClientRect().height / lineHeight);
+        const fits = content.scrollHeight <= body.clientHeight - 12 * viewportScale && el.scrollWidth <= el.clientWidth + 2 && lineCount <= maxLines;
+        if (fits) {
+            best = mid;
+            low = mid;
+        }
+        else
+            high = mid;
+    }
+    el.style.fontSize = best + 'px';
+    // Very long unbreakable tokens may need an emergency wrap, never discretionary hyphenation.
+    if (el.scrollWidth > el.clientWidth + 2)
+        el.style.overflowWrap = 'anywhere';
+}
+window.addEventListener('resize', () => { if (document.getElementById('eventFitTitle'))
+    fitEventTitle(); });
+startApp();
+setInterval(() => { if (session && !document.body.classList.contains('display-mode') && !document.querySelector('#modal.open'))
+    refresh(); }, 60000);
+</script></body></html>
